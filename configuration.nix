@@ -71,15 +71,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim
-    wget
-    tmux
+    devbox #user applications are run in devbox shell
     openssl
-    go
-    cargo
-    rustup
-    git
-    gh
     rsync
   ];
 

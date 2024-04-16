@@ -1,0 +1,40 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetpack-io/devbox/0.10.3/.schema/devbox.schema.json",
+  "packages": [
+    "go@latest",
+    "cargo@latest",
+    "python@latest",
+    "bun@latest",
+    "nodejs@latest",
+    "git@latest",
+    "vim@latest",
+    "tmux@latest",
+    "nmap@latest",
+    "xxd@latest",
+    "pngcheck@latest",
+    "steghide@latest",
+    "htop@latest",
+    "zsh@latest",
+    "thc-hydra@latest",
+    "john@latest",
+    "hashcat@latest",
+    "binwalk@latest",
+    "gobuster@latest",
+    "wfuzz@latest",
+    "medusa@latest",
+    "dislocker@latest",
+    "aircrack-ng@latest",
+    "exifprobe@latest",
+    "masscan@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      ". /home/trent/.devbox/virtenv/python/.venv/bin/activate"
+    ],
+    "scripts": {
+      "test": [
+        "echo \"Error: no test specified\" && exit 1"
+      ]
+    }
+  }
+}
