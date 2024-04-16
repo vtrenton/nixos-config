@@ -72,6 +72,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     devbox #user applications are run in devbox shell
+    vim
+    git
     openssl
     rsync
   ];
