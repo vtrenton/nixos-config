@@ -30,7 +30,7 @@
   ],
   "shell": {
     "init_hook": [
-      ". /home/trent/.devbox/virtenv/python/.venv/bin/activate"
+      "echo connect wired"
     ],
     "scripts": {
       "test": [
