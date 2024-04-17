@@ -30,7 +30,7 @@
   ],
   "shell": {
     "init_hook": [
-      "echo connect wired"
+      ". $VENV_DIR/bin/activate"
     ],
     "scripts": {
       "test": [
