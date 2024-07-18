@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/jetpack-io/devbox/0.10.3/.schema/devbox.schema.json",
+  "$schema": "https://raw.githubusercontent.com/jetpack-io/devbox/0.12.0/.schema/devbox.schema.json",
   "packages": [
     "go@latest",
     "cargo@latest",
@@ -12,6 +12,8 @@
     "wget@latest",
     "nmap@latest",
     "xxd@latest",
+    "jq@latest",
+    "yq-go@latest",
     "pngcheck@latest",
     "steghide@latest",
     "htop@latest",
@@ -26,7 +28,17 @@
     "dislocker@latest",
     "aircrack-ng@latest",
     "exifprobe@latest",
-    "masscan@latest"
+    "masscan@latest",
+    "kubectl@latest",
+    "krew@latest",
+    "helm@latest",
+    "podman@latest",
+    "podman-compose@latest",
+    "podman-tui@latest",
+    "opentofu@latest",
+    "awscli2@latest",
+    "azure-cli@latest",
+    "google-cloud-sdk@latest"
   ],
   "shell": {
     "init_hook": [
