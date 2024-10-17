@@ -5,6 +5,7 @@
     "cargo@latest",
     "python@latest",
     "bun@latest",
+    "bat@latest",
     "nodejs@latest",
     "gh@latest",
     "vim@latest",
@@ -31,14 +32,16 @@
     "masscan@latest",
     "kubectl@latest",
     "krew@latest",
-    "helm@latest",
+    "kubernetes-helm@latest",
+    "cri-tools@latest",
     "podman@latest",
     "podman-compose@latest",
     "podman-tui@latest",
     "opentofu@latest",
     "awscli2@latest",
     "azure-cli@latest",
-    "google-cloud-sdk@latest"
+    "google-cloud-sdk@latest",
+    "fastfetch@latest"
   ],
   "shell": {
     "init_hook": [
