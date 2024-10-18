@@ -78,6 +78,7 @@
       librewolf
       ungoogled-chromium
       wireshark
+      virt-manager
       devbox
     ];
   };
@@ -95,6 +96,7 @@
     wget
     rsync
     gnupg
+    pinentry
     git
   ];
 
@@ -107,7 +109,10 @@
   # };
 
   # List services that you want to enable:
-
+  # Cosmic Desktop
+  services.desktopManager.cosmic.enable = true;
+  services.displayManager.cosmic-greeter.enable = true;
+  
   services.openssh.enable = true;
   services.flatpak.enable = true;
   services.k3s.enable = true;
