@@ -4,6 +4,8 @@
     "go@latest",
     "cargo@latest",
     "python@latest",
+    "clang@latest",
+    "gcc@latest",
     "bun@latest",
     "bat@latest",
     "nodejs@latest",

@@ -79,6 +79,7 @@
       ungoogled-chromium
       wireshark
       virt-manager
+      code-cursor
       devbox
     ];
   };
