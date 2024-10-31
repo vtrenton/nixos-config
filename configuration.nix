@@ -58,9 +58,10 @@
       gh
       tmux
       bat
-      librewolf
       slack-cli
+      librewolf
       ungoogled-chromium
+      google-chrome
       wireshark
       virt-manager
       code-cursor
@@ -74,7 +75,9 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
+    htop
+    whois
     wget
     rsync
     gnupg
