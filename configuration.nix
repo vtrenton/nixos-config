@@ -81,7 +81,8 @@
     wget
     rsync
     gnupg
-    pinentry
+    pinentry-tty
+    transmission_4-gtk
     git
   ];
 
