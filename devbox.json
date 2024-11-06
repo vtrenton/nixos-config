@@ -35,6 +35,7 @@
     "kubectl@latest",
     "krew@latest",
     "kubernetes-helm@latest",
+    "kubebuilder@latest",
     "cri-tools@latest",
     "podman@latest",
     "podman-compose@latest",

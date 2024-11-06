@@ -77,6 +77,7 @@
   environment.systemPackages = with pkgs; [
     vim
     htop
+    dig
     whois
     wget
     rsync
