@@ -107,8 +107,19 @@
   #services.k3s.role = "server";
 
   # virt-manager
-  virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
+  virtualisation.libvirtd.enable = true;
+  # Start the default libvirtd network on startup
+  systemd.services.virsh-autostart-default-network = {
+    description = "Ensure default libvirt network is set to autostart";
+    after = [ "libvirtd.service" ];
+    wants = [ "libvirtd.service" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.libvirt}/bin/virsh net-autostart default";
+      Type = "oneshot";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
 
   virtualisation.containers.enable = true;
   virtualisation = {
