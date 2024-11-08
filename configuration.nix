@@ -60,6 +60,7 @@
       bat
       slack-cli
       librewolf
+      ipcalc
       ungoogled-chromium
       google-chrome
       wireshark

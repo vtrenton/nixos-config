@@ -6,6 +6,7 @@
     "python@latest",
     "clang@latest",
     "gcc@latest",
+    "gnumake@latest",
     "bun@latest",
     "bat@latest",
     "nodejs@latest",
