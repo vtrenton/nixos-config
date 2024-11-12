@@ -14,4 +14,4 @@ echo "upgrading core system...."
 nixos-rebuild switch
 
 echo "running GC..."
-nix-collect-garbage --quiet
+nix-collect-garbage -d --quiet

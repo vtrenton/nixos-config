@@ -58,6 +58,7 @@
       gh
       tmux
       bat
+      nodejs # needed for vim coc plugin
       slack-cli
       librewolf
       ipcalc
@@ -78,6 +79,7 @@
   environment.systemPackages = with pkgs; [
     vim
     htop
+    file
     dig
     whois
     wget
