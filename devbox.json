@@ -3,7 +3,6 @@
   "packages": [
     "go@latest",
     "cargo@latest",
-    "python@latest",
     "clang@latest",
     "gcc@latest",
     "gnumake@latest",
@@ -11,6 +10,7 @@
     "bat@latest",
     "nodejs@latest",
     "gh@latest",
+    "glab@latest",
     "vim@latest",
     "tmux@latest",
     "wget@latest",
