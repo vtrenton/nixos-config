@@ -85,6 +85,7 @@
     wget
     rsync
     gnupg
+    openconnect
     networkmanager-openconnect
     pinentry-tty
     transmission_4-gtk
