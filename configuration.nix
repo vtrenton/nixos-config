@@ -82,6 +82,7 @@
     file
     dig
     whois
+    traceroute
     wget
     rsync
     gnupg
