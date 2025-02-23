@@ -1,0 +1,1 @@
+Base NixOS and devbox configurations
