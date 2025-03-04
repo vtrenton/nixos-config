@@ -10,7 +10,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "Krum"; # Define your hostname.
+  networking.hostName = ""; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;
