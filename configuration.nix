@@ -55,18 +55,17 @@
     description = "Trent V";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
     packages = with pkgs; [
-      gh
       tmux
       bat
       nodejs # needed for vim coc plugin
-      slack-cli
       librewolf
+      brave
+      ghostty
       ipcalc
-      ungoogled-chromium
-      google-chrome
       wireshark
       virt-manager
       code-cursor
+      transmission_4-gtk
       devbox
     ];
   };
@@ -89,7 +88,6 @@
     openconnect
     networkmanager-openconnect
     pinentry-tty
-    transmission_4-gtk
     git
   ];
 
