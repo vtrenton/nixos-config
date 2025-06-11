@@ -45,6 +45,7 @@
     "exifprobe@latest",
     "masscan@latest",
     "kubectl@latest",
+    "minikube@latest",
     "krew@latest",
     "kubernetes-helm@latest",
     "kubebuilder@latest",
@@ -55,10 +56,14 @@
     "podman-compose@latest",
     "podman-tui@latest",
     "opentofu@latest",
+    "pulumi@latest",
+    "pulumi-esc@latest",
+    "pulumiPackages.pulumi-nodejs@latest",
     "awscli2@latest",
     "azure-cli@latest",
     "google-cloud-sdk@latest",
-    "fastfetch@latest"
+    "fastfetch@latest",
+    "yarn@latest"
   ],
   "shell": {
     "init_hook": [
