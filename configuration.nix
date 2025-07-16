@@ -96,6 +96,7 @@
       ruby
       ollama
       clolcat
+      openvpn
       cowsay
       xxd
       hexedit
