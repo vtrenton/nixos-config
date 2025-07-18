@@ -87,6 +87,7 @@
       gh
       glab
       gdb
+      android-tools
       go
       golint
       errcheck
@@ -157,6 +158,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
+    emacs
     binutils
     htop
     file
@@ -223,7 +225,16 @@
 
   # virt-manager
   programs.virt-manager.enable = true;
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu;
+      ovmf = {
+        enable = true;
+        packages = [ pkgs.OVMF ];
+      };
+    };
+  };
   # Start the default libvirtd network on startup
   systemd.services.virsh-autostart-default-network = {
     description = "Ensure default libvirt network is set to autostart";
