@@ -104,6 +104,7 @@
       xxd
       hexedit
       unzip
+      p7zip
       fzf
       jq
       yq-go
