@@ -86,12 +86,14 @@
       bat
       gh
       glab
+      gcc
       gdb
       android-tools
       go
       golint
       errcheck
       cargo
+      rustc
       nodejs
       yarn
       python3
@@ -101,6 +103,7 @@
       openvpn
       metasploit
       cowsay
+      shellcheck
       xxd
       hexedit
       unzip
@@ -125,7 +128,6 @@
       virt-manager
       obs-studio
       code-cursor
-      opencode
       claude-code
       transmission_4-gtk
       system76-keyboard-configurator
