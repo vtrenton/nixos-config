@@ -162,7 +162,6 @@
   environment.systemPackages = with pkgs; [
     vim
     emacs
-    binutils
     htop
     file
     dig
@@ -173,6 +172,7 @@
     lm_sensors
     dmidecode
     lshw
+    binutils
     usbutils
     pciutils
     gnupg
