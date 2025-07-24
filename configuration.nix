@@ -84,6 +84,7 @@
     packages = with pkgs; [
       tmux
       bat
+      feh
       gh
       glab
       gcc
@@ -115,6 +116,7 @@
       nmap
       binwalk
       exiftool
+      foremost
       sonic-visualiser
       ffuf
       librewolf
