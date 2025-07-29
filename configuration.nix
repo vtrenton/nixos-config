@@ -168,6 +168,7 @@
     file
     dig
     whois
+    netcat-openbsd
     traceroute
     wget
     rsync
