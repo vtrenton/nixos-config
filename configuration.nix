@@ -126,6 +126,7 @@
       ipcalc
       wireshark
       qFlipper
+      below
       wireguard-tools
       virt-manager
       obs-studio
