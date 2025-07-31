@@ -173,6 +173,7 @@
     traceroute
     wget
     rsync
+    wl-clipboard
     lm_sensors
     dmidecode
     lshw
@@ -235,13 +236,19 @@
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
-      package = pkgs.qemu;
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;
       ovmf = {
         enable = true;
-        packages = [ pkgs.OVMF ];
+        packages = [(pkgs.OVMF.override {
+  	  secureBoot = true;
+  	  tpmSupport = true;
+        }).fd];
       };
     };
   };
+
   # Start the default libvirtd network on startup
   systemd.services.virsh-autostart-default-network = {
     description = "Ensure default libvirt network is set to autostart";
