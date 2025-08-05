@@ -131,6 +131,7 @@
       claude-code
       transmission_4-gtk
       system76-keyboard-configurator
+      rpi-imager
       discord
       devbox
       ghidra
