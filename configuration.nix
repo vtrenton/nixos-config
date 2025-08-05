@@ -6,17 +6,26 @@
       ./hardware-configuration.nix
     ];
 
-
-  networking.hostName = "cerberus"; # Define your hostname.
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Custom local host resolution
-  networking.hosts = {
-    "10.10.11.77" = ["outbound.htb" "mail.outbound.htb"];
-    "10.10.11.80" = ["editor.htb" "wiki.editor.htb"];
+  networking = {
+    hostName = "cerberus"; # Define your hostname.
+    networkmanager.enable = true;
+    firewall.enable = false;
+    hosts = {
+      "10.10.11.77" = ["outbound.htb" "mail.outbound.htb"];
+      "10.10.11.80" = ["editor.htb" "wiki.editor.htb"];
+    };
   };
+
+  environment.variables.EDITOR = "vim";
+
+  # Local Proxy config
+  # environment.variables = {
+  #   http_proxy  = "http://localhost:8080";
+  #   https_proxy = "http://your.proxy.server:port";
+  #   ftp_proxy   = "http://your.proxy.server:port";
+  #   all_proxy   = "http://your.proxy.server:port";
+  #   no_proxy    = "localhost,127.0.0.1,::1";
+  #};
 
   # Set your time zone.
   time.timeZone = "America/Chicago";
@@ -34,43 +43,13 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
-  };
-  
-  # System76
-  hardware.system76.enableAll = true;
-  
-  # Enable CUPS to print documents.
-  #services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
- 
-  # Local Proxy config
-  # environment.variables = {
-  #   http_proxy  = "http://localhost:8080";
-  #   https_proxy = "http://your.proxy.server:port";
-  #   ftp_proxy   = "http://your.proxy.server:port";
-  #   all_proxy   = "http://your.proxy.server:port";
-  #   no_proxy    = "localhost,127.0.0.1,::1";
-  #};
-
-  environment.variables.EDITOR = "vim";
-  
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    # Add any missing dynamic libraries for unpackaged programs
-    # here, NOT in environment.systemPackages
-  ];
-
+  }; 
+   
   # Experimental
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.trent = {
@@ -154,9 +133,6 @@
     ];
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -184,82 +160,117 @@
     git
     git-lfs
   ];
-
-  # Nonroot - flipper
-  services.udev.extraRules = ''
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE="0777", GROUP="dialout", TAG+="uaccess"
-  '';
-
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  
+  # Realtime scheduling for pipewire
+  security.rtkit.enable = true; 
 
   # List services that you want to enable:
 
-  # Cosmic Desktop
-  services.desktopManager.cosmic.enable = true;
-  services.displayManager.cosmic-greeter.enable = true;
-  
-  services.openssh.enable = true;
-  services.openssh.settings = {
-    PermitRootLogin = "no";
-    PasswordAuthentication = false;
-  };
+  services = {
+    # Enable sound with pipewire.
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
 
-  # Flatpak configuration
-  services.flatpak.enable = true;
-  systemd.services.flatpak-repo = {
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.flatpak ];
-    script = ''
-      if [ ! $(flatpak remotes --columns=name | grep flathub) ]; then
-        flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-      fi
+    # Nonroot - flipper
+    udev.extraRules = ''
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE="0777", GROUP="dialout", TAG+="uaccess"
     '';
-  };
-  
-  # user mode wireshark
-  programs.wireshark.enable = true;
-  programs.wireshark.dumpcap.enable = true;
-  programs.wireshark.usbmon.enable = true;
 
-  # virt-manager
-  programs.virt-manager.enable = true;
-  virtualisation.libvirtd = {
-    enable = true;
-    qemu = {
-      package = pkgs.qemu_kvm;
-      runAsRoot = true;
-      swtpm.enable = true;
-      ovmf = {
-        enable = true;
-        packages = [(pkgs.OVMF.override {
-  	  secureBoot = true;
-  	  tpmSupport = true;
-        }).fd];
+    # Enable CUPS to print documents.
+    #printing.enable = true;
+
+    # Cosmic Desktop
+    desktopManager.cosmic.enable = true;
+    displayManager.cosmic-greeter.enable = true;
+    
+    # ssh
+    openssh = {
+      enable = true;
+      settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
       };
     };
+    
+    # flatpak
+    flatpak.enable = true;
   };
 
-  # Start the default libvirtd network on startup
-  systemd.services.virsh-autostart-default-network = {
-    description = "Ensure default libvirt network is set to autostart";
-    after = [ "libvirtd.service" ];
-    wants = [ "libvirtd.service" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.libvirt}/bin/virsh net-autostart default";
-      Type = "oneshot";
+  systemd.services = {
+    # Flatpak configuration
+    flatpak-repo = {
+      wantedBy = [ "multi-user.target" ];
+      path = [ pkgs.flatpak ];
+      script = ''
+        if [ ! $(flatpak remotes --columns=name | grep flathub) ]; then
+          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        fi
+      '';
     };
-    wantedBy = [ "multi-user.target" ];
+
+    # Start the default libvirtd network on startup
+    virsh-autostart-default-network = {
+      description = "Ensure default libvirt network is set to autostart";
+      after = [ "libvirtd.service" ];
+      wants = [ "libvirtd.service" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.libvirt}/bin/virsh net-autostart default";
+        Type = "oneshot";
+      };
+      wantedBy = [ "multi-user.target" ];
+    };
+  };
+ 
+  # user mode wireshark
+  programs = {
+    wireshark = {
+      enable = true;
+      dumpcap.enable = true;
+      usbmon.enable = true;
+    };
+
+    # Some programs need SUID wrappers, can be configured further or are
+    # started in user sessions.
+    # mtr.enable = true;
+    # gnupg.agent = {
+    #   enable = true;
+    #   enableSSHSupport = true;
+    # };
+
+    nix-ld.enable = true;
+    nix-ld.libraries = with pkgs; [
+      # Add any missing dynamic libraries for unpackaged programs
+      # here, NOT in environment.systemPackages
+    ];
+    
+    # virt-manager
+    virt-manager.enable = true;
   };
 
-  virtualisation.containers.enable = true;
   virtualisation = {
+    # libvirtd
+    libvirtd = {
+      enable = true;
+      qemu = {
+        package = pkgs.qemu_kvm;
+        runAsRoot = true;
+        swtpm.enable = true;
+        ovmf = {
+          enable = true;
+          packages = [(pkgs.OVMF.override {
+    	  secureBoot = true;
+    	  tpmSupport = true;
+          }).fd];
+        };
+      };
+    };
+
+    # Podman Containers
+    containers.enable = true;
     podman = {
       enable = true;
       # Create a `docker` alias for podman, to use it as a drop-in replacement
@@ -268,9 +279,6 @@
       defaultNetwork.settings.dns_enabled = true;
     };
   };
-
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
 
   system.stateVersion = "25.05";
 }

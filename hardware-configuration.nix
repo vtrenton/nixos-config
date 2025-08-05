@@ -5,6 +5,12 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  # System76
+  hardware = {
+    system76.enableAll = true;
+    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  };
+
   boot = {
     loader = {
       systemd-boot.enable = true;
@@ -46,7 +52,6 @@
     # It's still possible to open the bootloader list by pressing any key
     # It will just not appear on screen unless a key is pressed
     loader.timeout = 0;
-
   };
 
   fileSystems."/" =
@@ -71,5 +76,4 @@
   # networking.interfaces.wlp46s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
