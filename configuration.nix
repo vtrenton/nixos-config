@@ -15,36 +15,7 @@
       "10.10.11.80" = ["editor.htb" "wiki.editor.htb"];
     };
   };
-
-  environment.variables.EDITOR = "vim";
-
-  # Local Proxy config
-  # environment.variables = {
-  #   http_proxy  = "http://localhost:8080";
-  #   https_proxy = "http://your.proxy.server:port";
-  #   ftp_proxy   = "http://your.proxy.server:port";
-  #   all_proxy   = "http://your.proxy.server:port";
-  #   no_proxy    = "localhost,127.0.0.1,::1";
-  #};
-
-  # Set your time zone.
-  time.timeZone = "America/Chicago";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  }; 
-   
+ 
   # Experimental
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -133,39 +104,46 @@
     ];
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    emacs
-    htop
-    file
-    dig
-    whois
-    netcat-openbsd
-    traceroute
-    wget
-    rsync
-    wl-clipboard
-    lm_sensors
-    dmidecode
-    lshw
-    binutils
-    usbutils
-    pciutils
-    gnupg
-    openconnect
-    networkmanager-openconnect
-    pinentry-tty
-    git
-    git-lfs
-  ];
-  
+  # System level configuration
+  environment = {
+    # system level environment variables
+    variables = {
+      EDITOR = "vim";
+    };
+
+    # List packages installed in system profile. To search, run:
+    # $ nix search wget
+    systemPackages = with pkgs; [
+      vim
+      emacs
+      htop
+      file
+      dig
+      whois
+      netcat-openbsd
+      traceroute
+      wget
+      rsync
+      wl-clipboard
+      lm_sensors
+      dmidecode
+      lshw
+      binutils
+      usbutils
+      pciutils
+      gnupg
+      openconnect
+      networkmanager-openconnect
+      pinentry-tty
+      git
+      git-lfs
+    ];
+  };
+
   # Realtime scheduling for pipewire
   security.rtkit.enable = true; 
-
-  # List services that you want to enable:
-
+  
+  # Service configuration
   services = {
     # Enable sound with pipewire.
     pipewire = {
@@ -199,7 +177,8 @@
     # flatpak
     flatpak.enable = true;
   };
-
+  
+  # Custom systemd unit configuration
   systemd.services = {
     # Flatpak configuration
     flatpak-repo = {
@@ -225,8 +204,8 @@
     };
   };
  
-  # user mode wireshark
   programs = {
+    # user mode wireshark
     wireshark = {
       enable = true;
       dumpcap.enable = true;
@@ -279,6 +258,24 @@
       defaultNetwork.settings.dns_enabled = true;
     };
   };
+
+  # Set time zone.
+  time.timeZone = "America/Chicago";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
+  }; 
 
   system.stateVersion = "25.05";
 }
