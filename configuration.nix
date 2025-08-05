@@ -15,8 +15,7 @@
   # Custom local host resolution
   networking.hosts = {
     "10.10.11.77" = ["outbound.htb" "mail.outbound.htb"];
-  #  "127.0.0.2" = ["other-localhost"];
-  #  "192.0.2.1" = ["mail.example.com" "imap.example.com"];
+    "10.10.11.80" = ["editor.htb" "wiki.editor.htb"];
   };
 
   # Set your time zone.
