@@ -133,6 +133,7 @@
       htop
       file
       dig
+      lsof
       whois
       netcat-openbsd
       traceroute
