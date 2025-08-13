@@ -84,6 +84,7 @@
       ghostty
       ipcalc
       wireshark
+      tcpdump
       qFlipper
       below
       wireguard-tools
