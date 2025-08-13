@@ -11,6 +11,7 @@
     networkmanager.enable = true;
     firewall.enable = false;
     hosts = {
+      "10.10.11.74" = ["artificial.htb"];
       "10.10.11.77" = ["outbound.htb" "mail.outbound.htb"];
       "10.10.11.80" = ["editor.htb" "wiki.editor.htb"];
     };
@@ -51,6 +52,8 @@
       metasploit
       cowsay
       shellcheck
+      contact # meshtastic
+      python313Packages.meshtastic
       xxd
       hexedit
       unzip
@@ -68,6 +71,7 @@
       librewolf
       brave
       tor-browser
+      signal-desktop
       ghostty
       ipcalc
       wireshark
@@ -77,7 +81,7 @@
       virt-manager
       obs-studio
       code-cursor
-      claude-code
+      #claude-code
       transmission_4-gtk
       system76-keyboard-configurator
       rpi-imager
@@ -122,6 +126,7 @@
       whois
       netcat-openbsd
       traceroute
+      minicom
       wget
       rsync
       wl-clipboard
