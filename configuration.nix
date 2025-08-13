@@ -8,8 +8,17 @@
 
   networking = {
     hostName = "cerberus"; # Define your hostname.
-    networkmanager.enable = true;
     firewall.enable = false;
+    
+    networkmanager = { 
+      enable = true;
+      settings = {
+        keyfile = {
+          unmanaged-devices = "interface-name:mon-*";
+        };
+      };
+    };
+
     hosts = {
       "10.10.11.74" = ["artificial.htb"];
       "10.10.11.77" = ["outbound.htb" "mail.outbound.htb"];
@@ -136,6 +145,7 @@
       binutils
       usbutils
       pciutils
+      iw
       gnupg
       openconnect
       networkmanager-openconnect
@@ -158,9 +168,11 @@
       pulse.enable = true;
     };
 
-    # Nonroot - flipper
+    # Nonroot - flipper and Panda wireless monitor mode
     udev.extraRules = ''
       SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE="0777", GROUP="dialout", TAG+="uaccess"
+      ACTION=="add|move", SUBSYSTEM=="net", ENV{DEVTYPE}=="wlan", ATTRS{idVendor}=="148f", ATTRS{idProduct}=="5572", TAG+="systemd", ENV{SYSTEMD_WANTS}="wifi-monitor@%E{INTERFACE}.service"
+      ACTION=="remove", SUBSYSTEM=="net", KERNEL=="mon-*", RUN+="${pkgs.iproute2}/bin/ip link delete %k"
     '';
 
     # Enable CUPS to print documents.
@@ -206,6 +218,49 @@
         Type = "oneshot";
       };
       wantedBy = [ "multi-user.target" ];
+    };
+    
+    # Create service to change device to monitor mode when enabled.
+    "wifi-monitor@" = {
+       description = "Create monitor-mode interface for %I";
+       after = [ "NetworkManager.service" "systemd-udevd.service" ];
+       wants = [ "NetworkManager.service" ];
+       serviceConfig = {
+         Type = "oneshot";
+         Environment = [ "IFACE=%i" ];
+         AmbientCapabilities = [ "CAP_NET_ADMIN" ];
+         ExecStart = pkgs.writeShellScript "wifi-monitor" ''
+           set -euo pipefail
+           echo "wifi-monitor: IFACE=$IFACE" | ${pkgs.systemd}/bin/systemd-cat -t wifi-monitor
+
+           # Wait until the iface is present
+           for i in $(seq 1 20); do
+           if ${pkgs.iproute2}/bin/ip link show "$IFACE" >/dev/null 2>&1; then
+             break
+           fi
+           sleep 0.1
+           done
+
+           MON="mon-$IFACE"
+
+           # Hand base iface away from NM and bring it down
+           ${pkgs.networkmanager}/bin/nmcli dev disconnect "$IFACE" || true
+           ${pkgs.networkmanager}/bin/nmcli dev set "$IFACE" managed no || true
+           ${pkgs.iproute2}/bin/ip link set "$IFACE" down || true
+
+           # Try separate monitor iface first
+           if ${pkgs.iw}/bin/iw dev "$IFACE" interface add "$MON" type monitor 2>/tmp/iw.err; then
+           ${pkgs.iproute2}/bin/ip link set "$MON" up
+           echo "wifi-monitor: created $MON" | ${pkgs.systemd}/bin/systemd-cat -t wifi-monitor
+           exit 0
+           fi
+
+           # Fallback: flip base iface to monitor mode
+           ${pkgs.iw}/bin/iw dev "$IFACE" set type monitor
+           ${pkgs.iproute2}/bin/ip link set "$IFACE" up
+           echo "wifi-monitor: flipped base iface $IFACE to monitor" | ${pkgs.systemd}/bin/systemd-cat -t wifi-monitor
+         '';
+       };
     };
   };
  
