@@ -58,6 +58,7 @@
       ollama
       clolcat
       openvpn
+      bolt-launcher # override
       metasploit
       cowsay
       shellcheck
@@ -78,6 +79,7 @@
       sonic-visualiser
       ffuf
       librewolf
+      ungoogled-chromium
       brave
       tor-browser
       signal-desktop
@@ -85,6 +87,9 @@
       ipcalc
       wireshark
       tcpdump
+      flashrom
+      esptool
+      espflash
       qFlipper
       below
       wireguard-tools
@@ -156,6 +161,23 @@
       git-lfs
     ];
   };
+  
+  # override values in broken packages
+  #nixpkgs.overlays = [
+  #  (final: prev: {
+  #    # Override the arg that bolt-launcher uses internally
+  #    bolt-launcher = prev.bolt-launcher.override {
+  #      fetchFromGitHub = args:
+  #        if ((args.owner or "") == "AdamCake"
+  #         && (args.repo  or "") == "bolt"
+  #         && (args.tag   or "") == "0.19.0")  # match your snippet
+  #        then prev.fetchFromGitHub (args // {
+  #          hash = "sha256-0ROwETpIa0j7gRhvLMFI9Sz2HEsAuUkQGg0jZef6o/g=";
+  #        })
+  #        else prev.fetchFromGitHub args;
+  #    };
+  #  })
+  #];
 
   # Realtime scheduling for pipewire
   security.rtkit.enable = true; 
