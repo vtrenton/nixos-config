@@ -58,10 +58,12 @@
       ollama
       clolcat
       openvpn
-      bolt-launcher # override
+      bolt-launcher 
       metasploit
       cowsay
       shellcheck
+      sdrpp
+      rtl-sdr
       contact # meshtastic
       python313Packages.meshtastic
       xxd
@@ -194,7 +196,8 @@
 
     # Nonroot - flipper and Panda wireless monitor mode
     udev.extraRules = ''
-      SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE="0777", GROUP="dialout", TAG+="uaccess"
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE="0777", GROUP="dialout", TAG+="uaccess" 
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838", MODE="0666", GROUP="adm", SYMLINK+="rtl_sdr"
       ACTION=="add|move", SUBSYSTEM=="net", ENV{DEVTYPE}=="wlan", ATTRS{idVendor}=="148f", ATTRS{idProduct}=="5572", TAG+="systemd", ENV{SYSTEMD_WANTS}="wifi-monitor@%E{INTERFACE}.service"
       ACTION=="remove", SUBSYSTEM=="net", KERNEL=="mon-*", RUN+="${pkgs.iproute2}/bin/ip link delete %k"
     '';

@@ -36,6 +36,7 @@
     };
 
     kernelModules = [ "kvm-intel" ];
+    blacklistedKernelModel = [ "dvb_usb_rtl28xxu" ];
     extraModulePackages = [ ];
 
     # Enable "Silent boot"
