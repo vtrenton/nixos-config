@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -8,6 +8,9 @@
 
   networking = {
     hostName = "cerberus"; # Define your hostname.
+    useDHCP = lib.mkDefault true; # Default to DHCP on all interfaces
+    # interfaces.enp0s13f0u1u3.useDHCP = lib.mkDefault true;
+    # interfaces.wlp46s0.useDHCP = lib.mkDefault true;
     firewall.enable = false;
     
     networkmanager = { 
