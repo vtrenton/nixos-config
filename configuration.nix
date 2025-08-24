@@ -101,7 +101,7 @@
       virt-manager
       obs-studio
       code-cursor
-      #claude-code
+      claude-code
       transmission_4-gtk
       system76-keyboard-configurator
       rpi-imager
