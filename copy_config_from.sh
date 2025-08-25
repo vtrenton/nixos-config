@@ -7,3 +7,4 @@ fi
 
 cp /etc/nixos/configuration.nix configuration.nix
 cp /etc/nixos/hardware-configuration.nix hardware-configuration.nix
+cp /etc/nixos/trent-pkgs.nix trent-pkgs.nix
