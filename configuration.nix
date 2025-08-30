@@ -75,6 +75,7 @@
       iw
       gnupg
       openconnect
+      lxqt.lxqt-policykit
       networkmanager-openconnect
       pinentry-tty
       git
@@ -100,7 +101,19 @@
   #];
 
   # Realtime scheduling for pipewire
-  security.rtkit.enable = true; 
+  security.rtkit.enable = true;
+
+  # polkit for fine-grained privilege (instead of full sudo root GUI)
+  security.polkit.enable = true;
+  security.polkit.extraConfig = ''
+    // Allow wheel to perform udisks2 disk operations (write/format) with a 1-time auth
+    polkit.addRule(function(action, subject) {
+      if (subject.isInGroup("wheel") &&
+          action.id.indexOf("org.freedesktop.udisks2.") === 0) {
+        return polkit.Result.AUTH_ADMIN_KEEP; // prompt once, cache
+      }
+    });
+  ''; 
   
   # Service configuration
   services = {
@@ -140,72 +153,90 @@
     flatpak.enable = true;
   };
   
-  # Custom systemd unit configuration
-  systemd.services = {
-    # Flatpak configuration
-    flatpak-repo = {
-      wantedBy = [ "multi-user.target" ];
-      path = [ pkgs.flatpak ];
-      script = ''
-        if [ ! $(flatpak remotes --columns=name | grep flathub) ]; then
-          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-        fi
-      '';
-    };
-
-    # Start the default libvirtd network on startup
-    virsh-autostart-default-network = {
-      description = "Ensure default libvirt network is set to autostart";
-      after = [ "libvirtd.service" ];
-      wants = [ "libvirtd.service" ];
-      serviceConfig = {
-        ExecStart = "${pkgs.libvirt}/bin/virsh net-autostart default";
-        Type = "oneshot";
+  # systemd configuration
+  systemd = {
+    # user services
+    user.services = {
+      # polkit activation
+      polkit-agent = {
+        description = "PolicyKit Authentication Agent (LXQt)";
+        wantedBy = [ "default.target" ];              # starts on login
+        after = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+        serviceConfig = {
+          ExecStart = "${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent";
+          Restart = "on-failure";
+        };
       };
-      wantedBy = [ "multi-user.target" ];
     };
-    
-    # Create service to change device to monitor mode when enabled.
-    "wifi-monitor@" = {
-       description = "Create monitor-mode interface for %I";
-       after = [ "NetworkManager.service" "systemd-udevd.service" ];
-       wants = [ "NetworkManager.service" ];
-       serviceConfig = {
-         Type = "oneshot";
-         Environment = [ "IFACE=%i" ];
-         AmbientCapabilities = [ "CAP_NET_ADMIN" ];
-         ExecStart = pkgs.writeShellScript "wifi-monitor" ''
-           set -euo pipefail
-           echo "wifi-monitor: IFACE=$IFACE" | ${pkgs.systemd}/bin/systemd-cat -t wifi-monitor
 
-           # Wait until the iface is present
-           for i in $(seq 1 20); do
-           if ${pkgs.iproute2}/bin/ip link show "$IFACE" >/dev/null 2>&1; then
-             break
-           fi
-           sleep 0.1
-           done
+    # system services
+    services = {
+      # Flatpak configuration
+      flatpak-repo = {
+        wantedBy = [ "multi-user.target" ];
+        path = [ pkgs.flatpak ];
+        script = ''
+          if [ ! $(flatpak remotes --columns=name | grep flathub) ]; then
+            flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          fi
+        '';
+      };
 
-           MON="mon-$IFACE"
+      # Start the default libvirtd network on startup
+      virsh-autostart-default-network = {
+        description = "Ensure default libvirt network is set to autostart";
+        after = [ "libvirtd.service" ];
+        wants = [ "libvirtd.service" ];
+        serviceConfig = {
+          ExecStart = "${pkgs.libvirt}/bin/virsh net-autostart default";
+          Type = "oneshot";
+        };
+        wantedBy = [ "multi-user.target" ];
+      };
+      
+      # Create service to change device to monitor mode when enabled.
+      "wifi-monitor@" = {
+         description = "Create monitor-mode interface for %I";
+         after = [ "NetworkManager.service" "systemd-udevd.service" ];
+         wants = [ "NetworkManager.service" ];
+         serviceConfig = {
+           Type = "oneshot";
+           Environment = [ "IFACE=%i" ];
+           AmbientCapabilities = [ "CAP_NET_ADMIN" ];
+           ExecStart = pkgs.writeShellScript "wifi-monitor" ''
+             set -euo pipefail
+             echo "wifi-monitor: IFACE=$IFACE" | ${pkgs.systemd}/bin/systemd-cat -t wifi-monitor
 
-           # Hand base iface away from NM and bring it down
-           ${pkgs.networkmanager}/bin/nmcli dev disconnect "$IFACE" || true
-           ${pkgs.networkmanager}/bin/nmcli dev set "$IFACE" managed no || true
-           ${pkgs.iproute2}/bin/ip link set "$IFACE" down || true
+             # Wait until the iface is present
+             for i in $(seq 1 20); do
+             if ${pkgs.iproute2}/bin/ip link show "$IFACE" >/dev/null 2>&1; then
+               break
+             fi
+             sleep 0.1
+             done
 
-           # Try separate monitor iface first
-           if ${pkgs.iw}/bin/iw dev "$IFACE" interface add "$MON" type monitor 2>/tmp/iw.err; then
-           ${pkgs.iproute2}/bin/ip link set "$MON" up
-           echo "wifi-monitor: created $MON" | ${pkgs.systemd}/bin/systemd-cat -t wifi-monitor
-           exit 0
-           fi
+             MON="mon-$IFACE"
 
-           # Fallback: flip base iface to monitor mode
-           ${pkgs.iw}/bin/iw dev "$IFACE" set type monitor
-           ${pkgs.iproute2}/bin/ip link set "$IFACE" up
-           echo "wifi-monitor: flipped base iface $IFACE to monitor" | ${pkgs.systemd}/bin/systemd-cat -t wifi-monitor
-         '';
-       };
+             # Hand base iface away from NM and bring it down
+             ${pkgs.networkmanager}/bin/nmcli dev disconnect "$IFACE" || true
+             ${pkgs.networkmanager}/bin/nmcli dev set "$IFACE" managed no || true
+             ${pkgs.iproute2}/bin/ip link set "$IFACE" down || true
+
+             # Try separate monitor iface first
+             if ${pkgs.iw}/bin/iw dev "$IFACE" interface add "$MON" type monitor 2>/tmp/iw.err; then
+             ${pkgs.iproute2}/bin/ip link set "$MON" up
+             echo "wifi-monitor: created $MON" | ${pkgs.systemd}/bin/systemd-cat -t wifi-monitor
+             exit 0
+             fi
+
+             # Fallback: flip base iface to monitor mode
+             ${pkgs.iw}/bin/iw dev "$IFACE" set type monitor
+             ${pkgs.iproute2}/bin/ip link set "$IFACE" up
+             echo "wifi-monitor: flipped base iface $IFACE to monitor" | ${pkgs.systemd}/bin/systemd-cat -t wifi-monitor
+           '';
+         };
+      };  
     };
   };
  
