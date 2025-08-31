@@ -75,7 +75,6 @@
       iw
       gnupg
       openconnect
-      lxqt.lxqt-policykit
       networkmanager-openconnect
       pinentry-tty
       git
@@ -156,19 +155,9 @@
   # systemd configuration
   systemd = {
     # user services
-    user.services = {
-      # polkit activation
-      polkit-agent = {
-        description = "PolicyKit Authentication Agent (LXQt)";
-        wantedBy = [ "default.target" ];              # starts on login
-        after = [ "graphical-session.target" ];
-        partOf = [ "graphical-session.target" ];
-        serviceConfig = {
-          ExecStart = "${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent";
-          Restart = "on-failure";
-        };
-      };
-    };
+    #user.services = {
+    #   services created and ran at service level
+    #};
 
     # system services
     services = {
