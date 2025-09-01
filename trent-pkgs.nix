@@ -34,5 +34,5 @@ with pkgs; [
   # containers/DevOps
   kubectl kubernetes-helm minikube krew kubebuilder cri-tools clusterctl opentofu
   pulumi pulumi-esc pulumiPackages.pulumi-nodejs podman-compose awscli2 #azure-cli
-  google-cloud-sdk
+  google-cloud-sdk ansible
 ]
