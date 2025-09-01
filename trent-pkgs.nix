@@ -10,8 +10,8 @@ with pkgs; [
   python3 ruby yamllint
 
   # hacking/forensics
-  metasploit nmap binwalk exiftool foremost sonic-visualiser ffuf wireshark
-  tcpdump ghidra #mitmproxy
+  metasploit nmap binwalk exiftool foremost sonic-visualiser ffuf wireshark ghidra
+  tcpdump mitmproxy
   
   # wireless 
   sdrpp rtl-sdr #contact #python313Packages.meshtastic
