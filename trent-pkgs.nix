@@ -3,7 +3,7 @@ with pkgs; [
   # system
   tmux bat feh openvpn openssl xxd hexedit unzip p7zip fzf jq yq-go ghostty ipcalc 
   wireguard-tools virt-manager transmission_4-gtk system76-keyboard-configurator
-  rpi-imager devbox below
+  rpi-imager devbox below tree
 
   # devel
   gh glab gcc gdb gnumake android-tools go golint errcheck cargo rustc nodejs yarn
