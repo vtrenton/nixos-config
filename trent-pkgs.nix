@@ -20,7 +20,7 @@ with pkgs; [
   ollama code-cursor claude-code
 
   # games/fun
-  clolcat bolt-launcher cowsay shellcheck qFlipper obs-studio yt-dlp
+  clolcat bolt-launcher cowsay shellcheck checkbashisms qFlipper obs-studio yt-dlp
 
   # Browser
   brave librewolf ungoogled-chromium tor-browser
@@ -33,6 +33,6 @@ with pkgs; [
 
   # containers/DevOps
   kubectl kubernetes-helm minikube krew kubebuilder cri-tools clusterctl opentofu
-  pulumi pulumi-esc pulumiPackages.pulumi-nodejs podman-compose awscli2 #azure-cli
-  google-cloud-sdk ansible
+  pulumi pulumi-esc pulumiPackages.pulumi-nodejs podman-compose awscli2 azure-cli
+  google-cloud-sdk google-cloud-sdk-gce ansible
 ]
