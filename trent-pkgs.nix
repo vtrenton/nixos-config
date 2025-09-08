@@ -21,6 +21,7 @@ with pkgs; [
 
   # games/fun
   clolcat bolt-launcher cowsay shellcheck checkbashisms qFlipper obs-studio yt-dlp
+  mpv vlc
 
   # Browser
   brave librewolf ungoogled-chromium tor-browser
