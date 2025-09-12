@@ -1,17 +1,17 @@
 { pkgs }:
 with pkgs; [
   # system
-  tmux bat feh openvpn openssl xxd hexedit unzip p7zip fzf jq yq-go ghostty ipcalc 
+  tmux bat feh openvpn openssl xxd hexedit unzip p7zip fzf jq yq-go devbox ipcalc 
   wireguard-tools virt-manager transmission_4-gtk system76-keyboard-configurator
-  rpi-imager devbox below tree
+  rpi-imager ghostty below tree
 
   # devel
-  gh glab gcc gdb gnumake android-tools go golint errcheck cargo rustc nodejs yarn
-  python3 ruby yamllint
+  gh glab gcc gdb gnumake ruby go golint errcheck yamllint cargo rustc nodejs yarn
+  python3 android-tools 
 
   # hacking/forensics
-  metasploit nmap binwalk exiftool foremost sonic-visualiser ffuf wireshark ghidra
-  tcpdump mitmproxy
+  metasploit nmap tcpdump binwalk wireshark exiftool sonic-visualiser ffuf ghidra
+  foremost mitmproxy
   
   # wireless 
   sdrpp rtl-sdr #contact #python313Packages.meshtastic
@@ -20,8 +20,8 @@ with pkgs; [
   ollama code-cursor claude-code
 
   # games/fun
-  clolcat bolt-launcher cowsay shellcheck checkbashisms qFlipper obs-studio yt-dlp
-  mpv vlc
+  bolt-launcher clolcat cowsay fortune shellcheck checkbashisms obs-studio yt-dlp
+  mpv vlc qFlipper
 
   # Browser
   brave librewolf ungoogled-chromium tor-browser
