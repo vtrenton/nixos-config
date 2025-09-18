@@ -6,8 +6,8 @@ with pkgs; [
   rpi-imager ghostty below tree
 
   # devel
-  gh glab gcc gdb gnumake ruby go golint errcheck yamllint cargo rustc nodejs yarn
-  python3 android-tools 
+  gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc ghc nodejs yarn
+  python3 ruby android-tools mitscheme chez 
 
   # hacking/forensics
   metasploit nmap tcpdump binwalk wireshark exiftool sonic-visualiser ffuf ghidra
