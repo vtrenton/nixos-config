@@ -1,9 +1,9 @@
 { pkgs }:
 with pkgs; [
   # system
-  tmux bat feh openvpn openssl xxd hexedit unzip p7zip fzf jq yq-go devbox ipcalc 
+  tmux bat ghostty openvpn openssl xxd hexedit unzip p7zip jq yq-go devbox ipcalc 
   wireguard-tools virt-manager transmission_4-gtk system76-keyboard-configurator
-  rpi-imager ghostty below tree
+  rpi-imager below tree fzf
 
   # devel
   gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc ghc nodejs yarn
@@ -20,8 +20,10 @@ with pkgs; [
   ollama code-cursor claude-code
 
   # games/fun
-  bolt-launcher clolcat cowsay fortune shellcheck checkbashisms obs-studio yt-dlp
-  mpv vlc qFlipper
+  bolt-launcher clolcat cowsay fortune shellcheck checkbashisms qFlipper yt-dlp
+  
+  # media
+  gimp feh mpv vlc obs-studio
 
   # Browser
   brave librewolf ungoogled-chromium tor-browser
@@ -35,5 +37,5 @@ with pkgs; [
   # containers/DevOps
   kubectl kubernetes-helm minikube krew kubebuilder cri-tools clusterctl opentofu
   pulumi pulumi-esc pulumiPackages.pulumi-nodejs podman-compose awscli2 azure-cli
-  google-cloud-sdk google-cloud-sdk-gce ansible
+  google-cloud-sdk google-cloud-sdk-gce ansible k0sctl
 ]
