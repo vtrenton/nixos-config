@@ -61,6 +61,7 @@
       dig
       lsof
       whois
+      e2fsprogs
       netcat-openbsd
       traceroute
       minicom
@@ -100,20 +101,27 @@
   #  })
   #];
 
-  # Realtime scheduling for pipewire
-  security.rtkit.enable = true;
+  security = {
+    # rust sudo replacement
+    sudo-rs.enable = true;
 
-  # polkit for fine-grained privilege (instead of full sudo root GUI)
-  security.polkit.enable = true;
-  security.polkit.extraConfig = ''
-    // Allow wheel to perform udisks2 disk operations (write/format) with a 1-time auth
-    polkit.addRule(function(action, subject) {
-      if (subject.isInGroup("wheel") &&
-          action.id.indexOf("org.freedesktop.udisks2.") === 0) {
-        return polkit.Result.AUTH_ADMIN_KEEP; // prompt once, cache
-      }
-    });
-  ''; 
+    # Realtime scheduling for pipewire
+    rtkit.enable = true;
+
+    # polkit for fine-grained privilege (instead of full sudo root GUI)
+    polkit = {
+      enable = true;
+      extraConfig = ''
+        // Allow wheel to perform udisks2 disk operations (write/format) with a 1-time auth
+        polkit.addRule(function(action, subject) {
+          if (subject.isInGroup("wheel") &&
+              action.id.indexOf("org.freedesktop.udisks2.") === 0) {
+            return polkit.Result.AUTH_ADMIN_KEEP; // prompt once, cache
+          }
+        });
+      '';
+    }; 
+  };
   
   # Service configuration
   services = {
