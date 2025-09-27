@@ -55,7 +55,7 @@
     systemPackages = with pkgs; [
       dash
       vim
-      emacs
+      emacs-nox
       htop
       file
       dig
