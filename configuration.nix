@@ -125,6 +125,13 @@
   
   # Service configuration
   services = {
+
+    # Disable GNOME ssh agent
+    gnome = { 
+      gnome-keyring.enable = true;
+      gcr-ssh-agent.enable = lib.mkForce false;
+    };
+
     # Enable sound with pipewire.
     pipewire = {
       enable = true;
@@ -239,6 +246,9 @@
   };
  
   programs = {
+    # start ssh key-agent at login
+    ssh.startAgent = true;
+
     # user mode wireshark
     wireshark = {
       enable = true;
