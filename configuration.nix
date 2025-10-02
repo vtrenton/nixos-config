@@ -54,7 +54,7 @@
     # $ nix search wget
     systemPackages = with pkgs; [
       dash
-      vim
+      vim-full
       emacs-nox
       htop
       file
