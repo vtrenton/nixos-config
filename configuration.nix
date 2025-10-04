@@ -43,6 +43,20 @@
     packages = import ./trent-pkgs.nix { inherit pkgs; };
   };
 
+  # Configure additional fonts for the system
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      roboto
+      roboto-mono
+      ubuntu-sans
+      ubuntu-sans-mono
+    ];
+    fontconfig = {
+      enable = true;
+    };
+  };
+
   # System level configuration
   environment = {
     # system level environment variables
