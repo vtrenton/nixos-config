@@ -1,4 +1,4 @@
-*NixOS system configuration and tools
+NixOS system configuration and tools
 =============================================
 
 This repository contains the NixOS configuration and tooling for my NixOS systems
