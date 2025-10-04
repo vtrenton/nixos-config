@@ -10,7 +10,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = ""; # Define your hostname.
+  networking.hostName = "zeus"; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;
