@@ -17,7 +17,7 @@ with pkgs; [
   sdrpp rtl-sdr #contact #python313Packages.meshtastic
 
   # AI 
-  ollama code-cursor claude-code
+  ollama claude-code codex
 
   # games/fun
   bolt-launcher clolcat cowsay fortune shellcheck checkbashisms qFlipper yt-dlp
