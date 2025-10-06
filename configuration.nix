@@ -188,6 +188,10 @@
   
   # systemd configuration
   systemd = {
+    # hack to add /bin/bash path for script compatability
+    tmpfiles.rules = [
+      "L+ /bin/bash - - - - /run/current-system/sw/bin/bash"
+    ];
     # user services
     #user.services = {
     #   services created and ran at service level
