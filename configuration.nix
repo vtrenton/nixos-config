@@ -26,6 +26,8 @@
       "10.10.11.74" = ["artificial.htb"];
       "10.10.11.77" = ["outbound.htb" "mail.outbound.htb"];
       "10.10.11.80" = ["editor.htb" "wiki.editor.htb"];
+      "10.10.11.85" = ["hacknet.htb"];
+      "10.10.10.245" = ["cap.htb"];
     };
   };
  
@@ -116,8 +118,10 @@
   #];
 
   security = {
-    # rust sudo replacement
+    # Privesc tooling
+    sudo.enable = false;
     sudo-rs.enable = true;
+    doas.enable = false;
 
     # Realtime scheduling for pipewire
     rtkit.enable = true;
