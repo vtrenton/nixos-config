@@ -3,7 +3,7 @@ with pkgs; [
   # system
   tmux bat ghostty openvpn openssl xxd hexedit unzip p7zip jq yq-go devbox ipcalc 
   wireguard-tools virt-manager tree fzf rpi-imager system76-keyboard-configurator
-  below transmission_4-gtk btop #usbtop
+  below transmission_4-gtk btop usbtop
 
   # devel
   gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc ghc nodejs yarn
@@ -11,7 +11,7 @@ with pkgs; [
 
   # hacking/forensics
   metasploit nmap tcpdump binwalk wireshark exiftool sonic-visualiser ffuf ghidra
-  foremost #mitmproxy
+  thc-hydra foremost mitmproxy
   
   # wireless 
   rtl-sdr #sdrpp 
