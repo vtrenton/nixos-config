@@ -27,6 +27,7 @@
       "10.10.11.77" = ["outbound.htb" "mail.outbound.htb"];
       "10.10.11.80" = ["editor.htb" "wiki.editor.htb"];
       "10.10.11.85" = ["hacknet.htb"];
+      "10.10.11.87" = ["expressway.htb"];
       "10.10.10.245" = ["cap.htb"];
     };
   };
@@ -41,7 +42,7 @@
   users.users.trent = {
     isNormalUser = true;
     description = "Trent V";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "wireshark" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "podman" "wireshark" "dialout" ];
     packages = import ./trent-pkgs.nix { inherit pkgs; };
   };
 
@@ -311,6 +312,8 @@
     containers.enable = true;
     podman = {
       enable = true;
+      # enable podman socket for docker compatibility
+      dockerSocket.enable = true;
       # Create a `docker` alias for podman, to use it as a drop-in replacement
       dockerCompat = true;
       # Required for containers under podman-compose to be able to talk to each other.
