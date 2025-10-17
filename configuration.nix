@@ -78,6 +78,7 @@
       dig
       lsof
       whois
+      patchelf
       e2fsprogs
       netcat-openbsd
       traceroute

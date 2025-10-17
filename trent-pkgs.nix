@@ -19,6 +19,9 @@ with pkgs; [
   # AI 
   ollama claude-code codex
 
+  # blockchain
+  foundry
+
   # games/fun
   bolt-launcher clolcat cowsay fortune shellcheck checkbashisms qFlipper yt-dlp
   
