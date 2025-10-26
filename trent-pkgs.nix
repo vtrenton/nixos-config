@@ -2,7 +2,7 @@
 with pkgs; [
   # system
   tmux bat ghostty openvpn openssl xxd hexedit unzip p7zip jq yq-go devbox ipcalc 
-  wireguard-tools virt-manager tree fzf rpi-imager system76-keyboard-configurator
+  wireguard-tools virt-manager tree fzf system76-keyboard-configurator #rpi-imager
   below transmission_4-gtk btop usbtop
 
   # devel
@@ -23,7 +23,7 @@ with pkgs; [
   foundry
 
   # games/fun
-  bolt-launcher clolcat cowsay fortune shellcheck checkbashisms qFlipper yt-dlp
+  clolcat cowsay fortune shellcheck checkbashisms qFlipper yt-dlp bolt-launcher
   
   # media
   gimp feh mpv vlc obs-studio
@@ -32,7 +32,7 @@ with pkgs; [
   brave librewolf ungoogled-chromium tor-browser
 
   # communications
-  signal-desktop discord
+  discord signal-desktop 
   
   # hardware
   flashrom esptool espflash
