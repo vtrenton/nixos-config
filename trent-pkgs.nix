@@ -14,7 +14,7 @@ with pkgs; [
   thc-hydra foremost mitmproxy
   
   # wireless 
-  rtl-sdr #sdrpp 
+  rtl-sdr sdrpp 
 
   # AI 
   ollama claude-code codex
@@ -26,7 +26,7 @@ with pkgs; [
   clolcat cowsay fortune shellcheck checkbashisms qFlipper yt-dlp bolt-launcher
   
   # media
-  gimp feh mpv vlc obs-studio
+  gimp feh mpv vlc obs-studio ardour guitarix gxplugins-lv2
 
   # Browser
   brave librewolf ungoogled-chromium tor-browser
