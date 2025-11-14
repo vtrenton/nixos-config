@@ -2,7 +2,7 @@
 with pkgs; [
   # system
   tmux bat ghostty openvpn openssl xxd hexedit unzip p7zip jq yq-go devbox ipcalc 
-  wireguard-tools virt-manager tree fzf system76-keyboard-configurator #rpi-imager
+  wireguard-tools virt-manager tree fzf system76-keyboard-configurator rpi-imager
   below transmission_4-gtk btop usbtop nix-init
 
   # devel
