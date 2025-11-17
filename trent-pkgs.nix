@@ -26,7 +26,7 @@ with pkgs; [
   clolcat cowsay fortune shellcheck checkbashisms qFlipper yt-dlp bolt-launcher
   
   # media
-  gimp feh mpv vlc obs-studio guitarix gxplugins-lv2 #ardour
+  gimp feh mpv vlc obs-studio guitarix gxplugins-lv2 ardour
 
   # Browser
   brave librewolf ungoogled-chromium tor-browser
