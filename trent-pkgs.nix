@@ -17,7 +17,7 @@ with pkgs; [
   rtl-sdr sdrpp 
 
   # AI 
-  ollama claude-code codex
+  ollama codex claude-code
 
   # blockchain
   foundry
@@ -29,7 +29,7 @@ with pkgs; [
   gimp feh mpv vlc obs-studio guitarix gxplugins-lv2 ardour
 
   # Browser
-  brave librewolf ungoogled-chromium tor-browser
+  brave ungoogled-chromium tor-browser librewolf
 
   # communications
   discord signal-desktop 
