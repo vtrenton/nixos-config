@@ -28,6 +28,7 @@
       "10.10.11.80" = ["editor.htb" "wiki.editor.htb"];
       "10.10.11.85" = ["hacknet.htb"];
       "10.10.11.87" = ["expressway.htb"];
+      "10.10.11.92" = ["conversor.htb"];
       "10.10.10.245" = ["cap.htb"];
     };
   };
