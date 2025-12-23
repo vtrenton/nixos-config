@@ -3,7 +3,7 @@ with pkgs; [
   # system
   tmux bat ghostty openvpn openssl xxd hexedit unzip p7zip jq yq-go devbox ipcalc 
   wireguard-tools virt-manager tree fzf system76-keyboard-configurator rpi-imager
-  below transmission_4-gtk btop usbtop nix-init ncdu
+  below transmission_4-gtk btop usbtop nix-init ncdu inxi
 
   # devel
   gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc ghc nodejs yarn
@@ -17,7 +17,7 @@ with pkgs; [
   rtl-sdr sdrpp 
 
   # AI 
-  ollama codex claude-code python313Packages.tiktoken
+  ollama codex claude-code python313Packages.tiktoken python313Packages.torch
 
   # blockchain
   foundry
