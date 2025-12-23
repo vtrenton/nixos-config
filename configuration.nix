@@ -153,6 +153,15 @@
       gcr-ssh-agent.enable = lib.mkForce false;
     };
 
+    # Chrony time management
+    chrony = {
+      enable = true;
+      servers = [
+        "time.nist.gov"
+        "time.google.com"
+      ];
+    };
+
     # Enable sound with pipewire.
     pipewire = {
       enable = true;
