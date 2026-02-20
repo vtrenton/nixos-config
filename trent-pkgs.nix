@@ -41,6 +41,6 @@ with pkgs; [
   # containers/DevOps
   kubectl kubernetes-helm minikube krew kubebuilder cri-tools clusterctl opentofu
   pulumi pulumi-esc pulumiPackages.pulumi-nodejs podman-compose azure-cli awscli2 
-  google-cloud-sdk google-cloud-sdk-gce ansible k0sctl dive kind teleport 
-  tailscale
+  google-cloud-sdk google-cloud-sdk-gce ansible k0sctl dive kind tailscale packer 
+  teleport
 ]
