@@ -68,6 +68,10 @@
       EDITOR = "vim";
     };
 
+    # /etc overrides
+    etc = {
+    }; 
+
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     systemPackages = with pkgs; [
@@ -169,6 +173,10 @@
       alsa.support32Bit = true;
       pulse.enable = true;
     };
+    
+    tailscale = {
+      enable = true;
+    };
 
     # Nonroot - flipper and Panda wireless monitor mode
     udev.extraRules = ''
@@ -184,7 +192,54 @@
     # Cosmic Desktop
     desktopManager.cosmic.enable = true;
     displayManager.cosmic-greeter.enable = true;
-    
+
+    # Strongswan for IPSEC VPN
+    strongswan = {
+      enable = true;
+      # point strongSwan at your secrets file (no secrets in Nix store)
+      secrets = [ "/var/lib/strongswan/ipsec.secrets" ];
+
+      connections = {
+        fortinet = {
+          keyexchange = "ikev1";
+          aggressive = "yes";
+          authby = "xauthpsk";
+          auto = "start";
+
+          # Remote
+          right = "161.115.130.2";
+          rightid = "%any";
+          rightsubnet = "10.110.0.0/24";
+
+          # Local
+          left = "%defaultroute";
+          leftid = "%any";
+          leftsubnet = "10.110.1.0/24";
+          leftmodecfgclient = "yes";
+          leftsourceip = "%config";
+          installroutes = "yes";
+          
+          # Mode Config + XAuth (this is the username)
+          modeconfig = "pull";
+          xauth = "client";
+          xauth_identity = "trenton.vanderwert";
+
+          # Phase 1: AES128/256 + SHA256 + DH14, lifetime 86400
+          ike = "aes128-sha256-modp2048,aes256-sha256-modp2048!";
+          ikelifetime = "86400s";
+
+          # Phase 2: AES128/256 + SHA256 + DH14 (PFS), lifetime 43200
+          esp = "aes128-sha256-modp2048,aes256-sha256-modp2048!";
+          lifetime = "43200s";
+          pfs = "yes";
+
+          # DPD + NAT-T
+          dpdaction = "restart";
+          dpddelay = "30s";
+          dpdtimeout = "120s";
+        };
+      };
+    };
     # ssh
     openssh = {
       enable = true;
