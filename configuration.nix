@@ -55,9 +55,19 @@
       roboto-mono
       ubuntu-sans
       ubuntu-sans-mono
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-cjk-sans-static
+      noto-fonts-cjk-serif-static
     ];
     fontconfig = {
       enable = true;
+      defaultFonts = {
+        serif = [ "Noto Serif" "Noto Serif CJK SC" ];
+        sansSerif = [ "Noto Sans" "Noto Sans CJK SC" ];
+        monospace = [ "JetBrains Mono" "Noto Sans Mono CJK SC" ];
+      };
     };
   };
 
