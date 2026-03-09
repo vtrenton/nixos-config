@@ -210,7 +210,8 @@
       secrets = [ "/var/lib/strongswan/ipsec.secrets" ];
 
       connections = {
-        fortinet = {
+
+        mirenai = {
           keyexchange = "ikev1";
           aggressive = "yes";
           authby = "xauthpsk";
@@ -233,6 +234,45 @@
           modeconfig = "pull";
           xauth = "client";
           xauth_identity = "trenton.vanderwert";
+
+          # Phase 1: AES128/256 + SHA256 + DH14, lifetime 86400
+          ike = "aes128-sha256-modp2048,aes256-sha256-modp2048!";
+          ikelifetime = "86400s";
+
+          # Phase 2: AES128/256 + SHA256 + DH14 (PFS), lifetime 43200
+          esp = "aes128-sha256-modp2048,aes256-sha256-modp2048!";
+          lifetime = "43200s";
+          pfs = "yes";
+
+          # DPD + NAT-T
+          dpdaction = "restart";
+          dpddelay = "30s";
+          dpdtimeout = "120s";
+        };
+
+        pgiren = {
+          keyexchange = "ikev1";
+          aggressive = "yes";
+          authby = "xauthpsk";
+          auto = "start";
+
+          # Remote
+          right = "208.181.164.241";
+          rightid = "%any";
+          rightsubnet = "0.0.0.0/0";
+
+          # Local
+          left = "%defaultroute";
+          leftid = "%any";
+          leftsubnet = "192.168.200.0/24";
+          leftmodecfgclient = "yes";
+          leftsourceip = "%config";
+          installroutes = "yes";
+          
+          # Mode Config + XAuth (this is the username)
+          modeconfig = "pull";
+          xauth = "client";
+          xauth_identity = "trenton.vanderwert210";
 
           # Phase 1: AES128/256 + SHA256 + DH14, lifetime 86400
           ike = "aes128-sha256-modp2048,aes256-sha256-modp2048!";
