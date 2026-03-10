@@ -211,7 +211,7 @@
 
       connections = {
 
-        mirenai = {
+        pg1iren = {
           keyexchange = "ikev1";
           aggressive = "yes";
           authby = "xauthpsk";
@@ -250,13 +250,13 @@
           dpdtimeout = "120s";
         };
 
-        pgiren = {
+        pg2iren = {
           keyexchange = "ikev1";
           aggressive = "yes";
           authby = "xauthpsk";
           auto = "start";
 
-          # Remote
+          # Remote 
           right = "208.181.164.241";
           rightid = "%any";
           rightsubnet = "0.0.0.0/0";

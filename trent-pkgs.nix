@@ -11,7 +11,7 @@ with pkgs; [
   python3 ruby android-tools mitscheme chez 
 
   # hacking/forensics
-  metasploit nmap tcpdump binwalk wireshark exiftool ffuf ghidra #sonic-visualiser 
+  metasploit nmap tcpdump binwalk wireshark exiftool ffuf ghidra sonic-visualiser 
   thc-hydra foremost mitmproxy
   
   # wireless 
