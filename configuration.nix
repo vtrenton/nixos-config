@@ -137,7 +137,12 @@
   security = {
     # Privesc tooling
     sudo.enable = false;
-    sudo-rs.enable = true;
+    sudo-rs = {
+      enable = true;
+      extraConfig = ''
+        Defaults !pwfeedback
+      '';
+    };
     doas.enable = false;
 
     # Realtime scheduling for pipewire
@@ -259,7 +264,7 @@
           # Remote 
           right = "208.181.164.241";
           rightid = "%any";
-          rightsubnet = "0.0.0.0/0";
+          rightsubnet = "10.0.0.0/8";
 
           # Local
           left = "%defaultroute";
