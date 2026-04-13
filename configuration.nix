@@ -89,6 +89,21 @@
 
         set mouse=a
         set number
+        set laststatus=2
+
+        " Cache root check once
+        let s:is_root = trim(system('id -u')) ==# '0'
+
+        function! RootWarning()
+          return s:is_root ? " [ROOT] " : ""
+        endfunction
+
+        if s:is_root
+          highlight StatusLine cterm=NONE ctermfg=15 ctermbg=1 guifg=white guibg=red
+          highlight StatusLineNC cterm=NONE ctermbg=52 ctermfg=15 guifg=white guibg=darkred
+        endif
+
+        set statusline=%<%f%h%m%r%=%{RootWarning()}%y\ %p%%\ %l:%c
       '';
     }; 
 
