@@ -18,7 +18,7 @@ with pkgs; [
   rtl-sdr sdrpp 
 
   # AI 
-  ollama codex claude-code python313Packages.tiktoken python313Packages.torch 
+  ollama codex python313Packages.tiktoken python313Packages.torch #claude-code
 
   # blockchain
   foundry

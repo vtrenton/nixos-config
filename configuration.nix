@@ -80,6 +80,16 @@
 
     # /etc overrides
     etc = {
+      # System Vim config
+      # to enable modelines on session:
+      # :setlocal modeline modelines=5 | e
+      "vimrc".text = ''
+        set nomodeline
+        set modelines=0
+
+        set mouse=a
+        set number
+      '';
     }; 
 
     # List packages installed in system profile. To search, run:
@@ -209,92 +219,53 @@
     displayManager.cosmic-greeter.enable = true;
 
     # Strongswan for IPSEC VPN
-    strongswan = {
-      enable = true;
-      # point strongSwan at your secrets file (no secrets in Nix store)
-      secrets = [ "/var/lib/strongswan/ipsec.secrets" ];
+    #strongswan = {
+    #  enable = true;
+    #  # point strongSwan at your secrets file (no secrets in Nix store)
+    #  secrets = [ "/var/lib/strongswan/ipsec.secrets" ];
 
-      connections = {
+    #  connections = {
 
-        pg1iren = {
-          keyexchange = "ikev1";
-          aggressive = "yes";
-          authby = "xauthpsk";
-          auto = "start";
+    #    pg2iren = {
+    #      keyexchange = "ikev1";
+    #      aggressive = "yes";
+    #      authby = "xauthpsk";
+    #      auto = "start";
 
-          # Remote
-          right = "161.115.130.2";
-          rightid = "%any";
-          rightsubnet = "10.110.0.0/24";
+    #      # Remote 
+    #      right = "208.181.164.241";
+    #      rightid = "%any";
+    #      rightsubnet = "10.0.0.0/8";
 
-          # Local
-          left = "%defaultroute";
-          leftid = "%any";
-          leftsubnet = "10.110.1.0/24";
-          leftmodecfgclient = "yes";
-          leftsourceip = "%config";
-          installroutes = "yes";
-          
-          # Mode Config + XAuth (this is the username)
-          modeconfig = "pull";
-          xauth = "client";
-          xauth_identity = "trenton.vanderwert";
+    #      # Local
+    #      left = "%defaultroute";
+    #      leftid = "%any";
+    #      leftsubnet = "192.168.200.0/24";
+    #      leftmodecfgclient = "yes";
+    #      leftsourceip = "%config";
+    #      installroutes = "yes";
+    #      
+    #      # Mode Config + XAuth (this is the username)
+    #      modeconfig = "pull";
+    #      xauth = "client";
+    #      xauth_identity = "trenton.vanderwert210";
 
-          # Phase 1: AES128/256 + SHA256 + DH14, lifetime 86400
-          ike = "aes128-sha256-modp2048,aes256-sha256-modp2048!";
-          ikelifetime = "86400s";
+    #      # Phase 1: AES128/256 + SHA256 + DH14, lifetime 86400
+    #      ike = "aes128-sha256-modp2048,aes256-sha256-modp2048!";
+    #      ikelifetime = "86400s";
 
-          # Phase 2: AES128/256 + SHA256 + DH14 (PFS), lifetime 43200
-          esp = "aes128-sha256-modp2048,aes256-sha256-modp2048!";
-          lifetime = "43200s";
-          pfs = "yes";
+    #      # Phase 2: AES128/256 + SHA256 + DH14 (PFS), lifetime 43200
+    #      esp = "aes128-sha256-modp2048,aes256-sha256-modp2048!";
+    #      lifetime = "43200s";
+    #      pfs = "yes";
 
-          # DPD + NAT-T
-          dpdaction = "restart";
-          dpddelay = "30s";
-          dpdtimeout = "120s";
-        };
-
-        pg2iren = {
-          keyexchange = "ikev1";
-          aggressive = "yes";
-          authby = "xauthpsk";
-          auto = "start";
-
-          # Remote 
-          right = "208.181.164.241";
-          rightid = "%any";
-          rightsubnet = "10.0.0.0/8";
-
-          # Local
-          left = "%defaultroute";
-          leftid = "%any";
-          leftsubnet = "192.168.200.0/24";
-          leftmodecfgclient = "yes";
-          leftsourceip = "%config";
-          installroutes = "yes";
-          
-          # Mode Config + XAuth (this is the username)
-          modeconfig = "pull";
-          xauth = "client";
-          xauth_identity = "trenton.vanderwert210";
-
-          # Phase 1: AES128/256 + SHA256 + DH14, lifetime 86400
-          ike = "aes128-sha256-modp2048,aes256-sha256-modp2048!";
-          ikelifetime = "86400s";
-
-          # Phase 2: AES128/256 + SHA256 + DH14 (PFS), lifetime 43200
-          esp = "aes128-sha256-modp2048,aes256-sha256-modp2048!";
-          lifetime = "43200s";
-          pfs = "yes";
-
-          # DPD + NAT-T
-          dpdaction = "restart";
-          dpddelay = "30s";
-          dpdtimeout = "120s";
-        };
-      };
-    };
+    #      # DPD + NAT-T
+    #      dpdaction = "restart";
+    #      dpddelay = "30s";
+    #      dpdtimeout = "120s";
+    #    };
+    #  };
+    #};
     # ssh
     openssh = {
       enable = true;
