@@ -7,19 +7,18 @@ with pkgs; [
   openconnect strongswan proxychains-ng ncdu tigervnc pass
 
   # devel
-  gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc ghc nodejs yarn
-  python3 ruby android-tools mitscheme chez 
+  gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc bun nodejs yarn
+  python3 ruby android-tools mitscheme chez ghc
 
   # hacking/forensics
-  metasploit nmap tcpdump binwalk wireshark exiftool ffuf ghidra sonic-visualiser 
+  metasploit nmap tcpdump wireshark exiftool ffuf ghidra sonic-visualiser #binwalk
   thc-hydra foremost mitmproxy
   
   # wireless 
   rtl-sdr sdrpp 
 
   # AI 
-  ollama codex claude-code grok-cli
-  python313Packages.tiktoken python313Packages.torch 
+  ollama codex claude-code grok-cli opencode opencode-desktop
 
   # blockchain
   foundry
