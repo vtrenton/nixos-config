@@ -218,6 +218,16 @@
       enable = true;
     };
 
+    # local tor relay for anonymous proxy
+    tor = {
+      enable = true;
+      client.enable = true;
+
+      # Optional but nice
+      torsocks.enable = true;
+      enableGeoIP = false;
+    };
+
     # Nonroot - flipper and Panda wireless monitor mode
     udev.extraRules = ''
       SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE="0777", GROUP="dialout", TAG+="uaccess" 
