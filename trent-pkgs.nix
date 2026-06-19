@@ -11,7 +11,7 @@ with pkgs; [
   python3 ruby android-tools mitscheme chez ghc
 
   # hacking/forensics
-  metasploit nmap tcpdump wireshark exiftool ffuf ghidra sonic-visualiser #binwalk
+  metasploit nmap tcpdump wireshark exiftool ffuf ghidra sonic-visualiser binwalk
   thc-hydra foremost mitmproxy
   
   # wireless 
@@ -30,7 +30,7 @@ with pkgs; [
   gimp feh mpv vlc obs-studio ardour calibre gxplugins-lv2 guitarix
 
   # Browser
-  brave ungoogled-chromium tor-browser librewolf
+  brave ungoogled-chromium tor-browser #librewolf
 
   # communications
   signal-desktop
