@@ -6,14 +6,10 @@
       ./hardware-configuration.nix
     ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "zeus"; # Define your hostname.
-
-  # Enable networking
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "Zeus"; # Define your hostname.
+    networkmanager.enable = true;
+  };
 
   # Set your time zone.
   time.timeZone = "America/Chicago";
@@ -34,9 +30,10 @@
   };
 
   # Enable CUPS to print documents.
-  #services.printing.enable = true;
+  # services.printing.enable = true;
 
   # Enable sound with pipewire.
+  #services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -48,44 +45,68 @@
   # Experimental
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.trent = {
     isNormalUser = true;
     description = "Trent V";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "audio" "video" "realtime" ];
     packages = with pkgs; [
+      gh
+      jq
+      yq-go
       tmux
       bat
-      nodejs # needed for vim coc plugin
-      librewolf
-      brave
-      ghostty
+      nvd
+      nix-init
+      nixfmt
+      gimp
+      pass
       ipcalc
+      mpv
+      unzip
+      p7zip
+      brave
+      ungoogled-chromium
+      tor-browser
+      burpsuite
+      libreoffice
+      mupen64plus
+      rmg-wayland
+      ardour
+      lv2
+      gxplugins-lv2
+      minicom
+      #sdrpp
+      rtl-sdr
+      qpwgraph
+      alejandra
+      google-chrome
+      transmission_4-gtk
       wireshark
       virt-manager
-      code-cursor
-      transmission_4-gtk
-      devbox
+      vimPlugins.vim-addon-nix
     ];
   };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
     htop
-    file
-    dig
+    tor
+    coreutils
+    pciutils
+    usbutils
+    amdgpu_top
+    clinfo
     whois
-    traceroute
+    dig
     wget
     rsync
     gnupg
-    openconnect
-    networkmanager-openconnect
     pinentry-tty
     git
   ];
@@ -98,45 +119,31 @@
   #   enableSSHSupport = true;
   # };
 
+  services.udev.extraRules = ''
+  SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838", GROUP="adm", MODE="0666", SYMLINK+="rtl_sdr"
+  '';
+
+
   # List services that you want to enable:
 
   # Cosmic Desktop
-  services.desktopManager.cosmic.enable = true;
   services.displayManager.cosmic-greeter.enable = true;
+  services.desktopManager.cosmic.enable = true;
   
   services.openssh.enable = true;
   services.flatpak.enable = true;
 
   # virt-manager
-  programs.virt-manager.enable = true;
   virtualisation.libvirtd.enable = true;
-  # Start the default libvirtd network on startup
-  systemd.services.virsh-autostart-default-network = {
-    description = "Ensure default libvirt network is set to autostart";
-    after = [ "libvirtd.service" ];
-    wants = [ "libvirtd.service" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.libvirt}/bin/virsh net-autostart default";
-      Type = "oneshot";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
+  programs.virt-manager.enable = true;
 
-  virtualisation.containers.enable = true;
-  virtualisation = {
-    podman = {
-      enable = true;
-
-      # Create a `docker` alias for podman, to use it as a drop-in replacement
-      dockerCompat = true;
-
-      # Required for containers under podman-compose to be able to talk to each other.
-      defaultNetwork.settings.dns_enabled = true;
-    };
-  };
-
+  # Open ports in the firewall.
+  #networking.firewall.allowedTCPPorts = [
+  #];
+  #networking.firewall.allowedUDPPorts = [
+  #];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
+  # networking.firewall.enable = false;
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "24.05"; # Did you read the comment?
 }
