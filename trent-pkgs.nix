@@ -3,8 +3,11 @@ with pkgs; [
   # system
   tmux bat ghostty openvpn openssl xxd hexedit unzip p7zip jq yq-go devbox ipcalc 
   wireguard-tools virt-manager tree fzf system76-keyboard-configurator rpi-imager
-  below transmission_4-gtk btop usbtop nix-init nixfmt ripgrep inxi speedtest-cli
-  openconnect strongswan proxychains-ng ncdu tigervnc pass
+  below transmission_4-gtk btop usbtop ripgrep inxi speedtest-cli ncdu strongswan 
+  openconnect proxychains-ng tigervnc pass
+
+  # NixOS
+  nix-init nixfmt nvd
 
   # devel
   gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc bun nodejs yarn
