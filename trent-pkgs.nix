@@ -1,17 +1,17 @@
 { pkgs }:
 with pkgs; [
   # system
-  tmux bat ghostty openvpn openssl xxd hexedit unzip p7zip jq yq-go devbox ipcalc 
+  tmux bat ghostty openvpn openssl xxd hexedit unzip p7zip jq yq-go expect ipcalc 
   wireguard-tools virt-manager tree fzf system76-keyboard-configurator rpi-imager
   below transmission_4-gtk btop usbtop ripgrep inxi speedtest-cli ncdu strongswan 
-  openconnect proxychains-ng tigervnc pass
+  openconnect proxychains-ng tigervnc pass 
 
   # NixOS
   nix-init nixfmt nvd
 
   # devel
   gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc bun nodejs yarn
-  python3 ruby android-tools mitscheme chez ghc
+  python3 ruby android-tools mitscheme chez ghc glow
 
   # hacking/forensics
   metasploit nmap tcpdump wireshark exiftool ffuf ghidra sonic-visualiser binwalk
@@ -28,6 +28,7 @@ with pkgs; [
 
   # games/fun
   clolcat cowsay fortune shellcheck checkbashisms qFlipper yt-dlp bolt-launcher
+  fastfetch
   
   # media
   gimp feh mpv vlc obs-studio ardour calibre gxplugins-lv2 guitarix

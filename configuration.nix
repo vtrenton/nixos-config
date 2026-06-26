@@ -269,6 +269,11 @@
 
     # system services
     services = {
+      # Allows external storage to be mounted by standard users leveraging polkit.
+      udisks2 = {
+        enable = true;
+      };
+
       # Flatpak configuration
       flatpak-repo = {
         wantedBy = [ "multi-user.target" ];
