@@ -114,6 +114,7 @@
       vim-full
       emacs-nox
       htop
+      tmux
       file
       dig
       lsof
@@ -134,8 +135,6 @@
       pciutils
       iw
       gnupg
-      openconnect
-      networkmanager-openconnect
       pinentry-tty
       git
       git-lfs

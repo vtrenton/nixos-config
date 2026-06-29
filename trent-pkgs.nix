@@ -1,11 +1,10 @@
 { pkgs }:
 with pkgs; [
   # system
-  tmux bat ghostty openvpn openssl xxd hexedit unzip p7zip jq yq-go expect ipcalc 
-  wireguard-tools virt-manager tree fzf system76-keyboard-configurator rpi-imager
-  below transmission_4-gtk btop usbtop ripgrep inxi speedtest-cli ncdu strongswan 
-  openconnect proxychains-ng tigervnc pass 
-
+  tree bat ghostty ripgrep openssl xxd hexedit unzip p7zip jq yq-go expect ipcalc 
+  virt-manager pass fzf system76-keyboard-configurator rpi-imager ncdu below inxi 
+  btop usbtop transmission_4-gtk speedtest-cli tigervnc
+  
   # NixOS
   nix-init nixfmt nvd
 
@@ -16,7 +15,11 @@ with pkgs; [
   # hacking/forensics
   metasploit nmap tcpdump wireshark exiftool ffuf ghidra sonic-visualiser binwalk
   thc-hydra foremost mitmproxy
-  
+
+  # Net/Proxy
+  openvpn openconnect networkmanager-openconnect strongswan wireguard-tools tor
+  proxychains-ng
+
   # wireless 
   rtl-sdr sdrpp 
 
