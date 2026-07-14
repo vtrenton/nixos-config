@@ -18,7 +18,7 @@ with pkgs; [
 
   # Net/Proxy
   openvpn openconnect networkmanager-openconnect strongswan wireguard-tools tor
-  proxychains-ng
+  proxychains-ng tailscale teleport
 
   # wireless 
   rtl-sdr sdrpp 
@@ -32,12 +32,15 @@ with pkgs; [
   # games/fun
   clolcat cowsay fortune shellcheck checkbashisms qFlipper yt-dlp bolt-launcher
   fastfetch
-  
+
+  # productivity
+  obsidian
+
   # media
-  gimp feh mpv vlc obs-studio ardour calibre gxplugins-lv2 guitarix
+  gimp feh mpv vlc obs-studio ardour calibre gxplugins-lv2 guitarix ani-cli
 
   # Browser
-  brave ungoogled-chromium tor-browser #librewolf
+  brave ungoogled-chromium tor-browser librewolf
 
   # communications
   signal-desktop
@@ -46,8 +49,8 @@ with pkgs; [
   flashrom esptool espflash
 
   # containers/DevOps
-  kubectl kubernetes-helm minikube krew kubebuilder cri-tools clusterctl opentofu
+  kubectl kubernetes kubernetes-helm minikube krew kubebuilder cri-tools opentofu
   pulumi pulumi-esc pulumiPackages.pulumi-nodejs podman-compose awscli2 azure-cli
   google-cloud-sdk google-cloud-sdk-gce k0sctl dive kind ansible packer terraform 
-  tailscale teleport
+  clusterctl
 ]
