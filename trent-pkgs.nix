@@ -46,7 +46,7 @@ with pkgs; [
   signal-desktop
 
   # hardware
-  flashrom esptool espflash
+  flashrom esptool espflash kicad
 
   # containers/DevOps
   kubectl kubernetes kubernetes-helm minikube krew kubebuilder cri-tools opentofu

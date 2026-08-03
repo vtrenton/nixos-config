@@ -214,7 +214,7 @@
     };
     
     tailscale = {
-      enable = true;
+      enable = false;
     };
 
     # local tor relay for anonymous proxy
