@@ -20,6 +20,43 @@
           unmanaged-devices = "interface-name:mon-*";
         };
       };
+      # DefCon Wifi (tinfoil addition)
+      ensureProfiles.profiles."DefCon-WPA3" = {
+        connection = {
+          id = "DefCon-WPA3";
+          type = "wifi";
+          autoconnect = "true";
+          autoconnect-priority = 10;
+        };
+
+        wifi = {
+          mode = "infrastructure";
+          ssid = "DefCon-WPA3";
+        };
+
+        "wifi-security" = {
+          key-mgmt = "wpa-eap";
+          proto = "rsn";
+          pmf = 3;
+        };
+
+        "802-1x" = {
+          eap = "peap";
+          ca-cert = "/etc/ssl/certs/defcon34-wifi.crt"; # Make sure cert path is right
+          subject-match = "CN=wifireg.defcon.org";
+          altsubject-matches = "DNS:wifi.defcon.org";
+          phase1-peaplabel = "0";
+          phase2-auth = "mschapv2";
+          identity = "sn0tt3r";
+          password-flags = 1; # use --ask when activating. We wont set a password in this profile
+        };
+
+        ipv4.method = "auto";
+        ipv6 = {
+          method = "auto";
+          addr-gen-mode = "stable-privacy";
+        };
+      };
     };
 
     hosts = {
