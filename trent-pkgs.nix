@@ -3,7 +3,7 @@ with pkgs; [
   # system
   tree bat ghostty ripgrep openssl xxd hexedit unzip p7zip jq yq-go expect ipcalc 
   virt-manager pass fzf system76-keyboard-configurator rpi-imager ncdu below inxi 
-  btop usbtop transmission_4-gtk speedtest-cli tigervnc
+  btop usbtop transmission_4-gtk speedtest-cli tigervnc screen
   
   # NixOS
   nix-init nixfmt nvd
@@ -46,7 +46,7 @@ with pkgs; [
   signal-desktop
 
   # hardware
-  flashrom esptool espflash kicad
+  flashrom esptool espflash kicad picotool
 
   # containers/DevOps
   kubectl kubernetes kubernetes-helm minikube krew kubebuilder cri-tools opentofu
