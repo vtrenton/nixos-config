@@ -164,6 +164,7 @@
       rsync
       wl-clipboard
       lm_sensors
+      efibootmgr
       dmidecode
       lshw
       binutils
