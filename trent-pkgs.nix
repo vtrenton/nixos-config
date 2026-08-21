@@ -9,8 +9,8 @@ with pkgs; [
   nix-init nixfmt nvd
 
   # devel
-  gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc bun nodejs yarn
-  python3 ruby android-tools mitscheme chez ghc glow
+  gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc nodejs bun dino
+  yarn python3 ruby android-tools mitscheme chez ghc glow
 
   # hacking/forensics
   metasploit nmap tcpdump wireshark exiftool ffuf ghidra sonic-visualiser binwalk
@@ -38,6 +38,7 @@ with pkgs; [
 
   # media
   gimp feh mpv vlc obs-studio ardour calibre gxplugins-lv2 guitarix ani-cli
+  cliamp ffmpeg
 
   # Browser
   brave ungoogled-chromium tor-browser librewolf
