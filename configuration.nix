@@ -157,8 +157,10 @@
       whois
       patchelf
       e2fsprogs
+      exfat
       netcat-openbsd
       traceroute
+      mtr
       minicom
       wget
       rsync
