@@ -41,7 +41,54 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
+  
+  # workaround hack to get newer hardware working until unstable releases 2.0.3
+  nixpkgs.overlays = [
+    (final: prev: {
+      rtl-sdr-osmocom = prev.rtl-sdr-osmocom.overrideAttrs (_old: {
+          version = "2.0.3";
+  
+          src = prev.fetchFromGitHub {
+  	  owner = "osmocom";
+  	  repo = "rtl-sdr";
+  	  rev = "v2.0.3";
+  	  hash = "sha256-U9kFG7Fare4swx53fWvYgoV9zmrogyGQ+a1u6Qi8PZ4=";
+        };
+      });
+      rtl-sdr = final.rtl-sdr-osmocom;
+    })
+    (final: prev:
+      let
+        gnuradioMinimalNoUhdOsmosdr =
+          prev.gnuradioMinimal // {
+            pkgs = prev.gnuradioMinimal.pkgs.overrideScope (
+              _final: grPrev: {
+                osmosdr = grPrev.osmosdr.overrideAttrs (old: {
+                  cmakeFlags = (old.cmakeFlags or []) ++ [
+                    "-DENABLE_UHD=OFF"
+                    "-DENABLE_SOAPY=OFF"
+                  ];
+                });
+              }
+            );
+          };
+      in {
+        gqrx = prev.gqrx.override {
+          gnuradioMinimal = gnuradioMinimalNoUhdOsmosdr;
+        };
+      })
+  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware = {
+    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+    rtl-sdr = {
+      enable = true;
+      package = pkgs.rtl-sdr-osmocom;
+    };
+  };
 }

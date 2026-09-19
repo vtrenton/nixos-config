@@ -52,13 +52,14 @@
   users.users.trent = {
     isNormalUser = true;
     description = "Trent V";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "audio" "video" "realtime" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "audio" "video" "dialout" "realtime" ];
     packages = with pkgs; [
       gh
       jq
       yq-go
       tmux
       bat
+      btop
       nvd
       nix-init
       nixfmt
@@ -72,22 +73,34 @@
       ungoogled-chromium
       tor-browser
       burpsuite
+      steam
       libreoffice
       mupen64plus
       rmg-wayland
+      clolcat
+      cowsay
       ardour
       lv2
       gxplugins-lv2
       minicom
+      kicad
       #sdrpp
-      rtl-sdr
+      gqrx
+      hwinfo
+      fastfetch
+      python3
+      #rtl-sdr
       qpwgraph
       alejandra
+      android-tools
       google-chrome
       transmission_4-gtk
       wireshark
       virt-manager
       vimPlugins.vim-addon-nix
+      wine
+      wine64
+      wine-wayland
     ];
   };
 
@@ -109,6 +122,8 @@
     gnupg
     pinentry-tty
     git
+    killall
+    teleport
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -136,6 +151,37 @@
   # virt-manager
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
+
+  # Teleport ssh client
+  #services.teleport = {
+  #  enable = true;
+  #  package = pkgs.teleport;
+  #  settings = {
+  #    version = "v3";
+  #    teleport = {
+  #      nodename = config.networking.hostName;
+  #      data_dir = "/var/lib/teleport";
+  #      proxy_server = "teleport.trentonvanderwert.com:443";
+  #      auth_token = "/var/lib/teleport/join-token";
+  #      log = {
+  #        severity = "INFO";
+  #      };
+  #    };
+  #    auth_service = {
+  #      enabled = false;
+  #    };
+  #    proxy_service = {
+  #      enabled = false;
+  #    };
+  #    ssh_service = {
+  #      enabled = true;
+  #      labels = {
+  #        env = "lab";
+  #        os = "nixos";
+  #      };
+  #    };
+  #  };
+  #};
 
   # Open ports in the firewall.
   #networking.firewall.allowedTCPPorts = [
