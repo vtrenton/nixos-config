@@ -169,6 +169,7 @@
       efibootmgr
       dmidecode
       lshw
+      killall
       binutils
       usbutils
       pciutils

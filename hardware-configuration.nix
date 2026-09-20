@@ -9,6 +9,10 @@
   hardware = {
     system76.enableAll = true;
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    rtl-sdr = {
+      enable = true;
+      package = pkgs.rtl-sdr-osmocom;
+    };
   };
 
   boot = {
