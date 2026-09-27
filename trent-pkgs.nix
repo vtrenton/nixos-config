@@ -1,15 +1,19 @@
 { pkgs }:
 with pkgs; [
-  # system
+  # System
   tree bat ghostty ripgrep openssl xxd hexedit unzip p7zip jq yq-go expect ipcalc 
   virt-manager pass fzf system76-keyboard-configurator rpi-imager ncdu below inxi 
   btop usbtop transmission_4-gtk speedtest-cli tigervnc screen wine wine64
   wine-wayland
-  
+
+  # Cosmic
+  cosmic-ext-ctl cosmic-ext-applet-caffeine cosmic-ext-applet-privacy-indicator 
+  cosmic-ext-calculator cosmic-ext-applet-weather
+
   # NixOS
   nix-init nixfmt nvd
 
-  # devel
+  # Devel
   gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc nodejs bun dino
   yarn python3 ruby android-tools mitscheme chez ghc glow
 
@@ -39,7 +43,7 @@ with pkgs; [
 
   # media
   gimp feh mpv vlc obs-studio ardour calibre gxplugins-lv2 guitarix ani-cli
-  cliamp ffmpeg
+  cliamp ffmpeg asciinema asciinema-agg
 
   # Browser
   brave ungoogled-chromium tor-browser librewolf
