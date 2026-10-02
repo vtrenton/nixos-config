@@ -141,12 +141,14 @@
 
         set statusline=%<%f%h%m%r%=%{RootWarning()}%y\ %p%%\ %l:%c
       '';
+      "dict.conf".text = "server dict.org";
     }; 
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     systemPackages = with pkgs; [
       dash
+      dict
       vim-full
       emacs-nox
       htop

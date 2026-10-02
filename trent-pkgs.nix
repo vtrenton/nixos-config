@@ -5,11 +5,7 @@ with pkgs; [
   virt-manager pass fzf system76-keyboard-configurator rpi-imager ncdu below inxi 
   btop usbtop transmission_4-gtk speedtest-cli tigervnc screen wine wine64
   wine-wayland
-
-  # Cosmic
-  cosmic-ext-ctl cosmic-ext-applet-caffeine cosmic-ext-applet-privacy-indicator 
-  cosmic-ext-calculator cosmic-ext-applet-weather
-
+  
   # NixOS
   nix-init nixfmt nvd
 
@@ -26,7 +22,7 @@ with pkgs; [
   proxychains-ng tailscale teleport
 
   # wireless 
-  rtl-sdr sdrpp 
+  rtl-sdr #sdrpp 
 
   # AI 
   ollama codex claude-code grok-cli opencode opencode-desktop
@@ -56,7 +52,7 @@ with pkgs; [
 
   # containers/DevOps
   kubectl kubernetes kubernetes-helm minikube krew kubebuilder cri-tools opentofu
-  pulumi pulumi-esc pulumiPackages.pulumi-nodejs podman-compose awscli2 azure-cli
-  google-cloud-sdk google-cloud-sdk-gce k0sctl dive kind ansible packer terraform 
-  clusterctl
+  pulumi pulumi-esc pulumiPackages.pulumi-go pulumiPackages.pulumi-nodejs awscli2 
+  azure-cli google-cloud-sdk google-cloud-sdk-gce k0sctl dive kind ansible packer
+  podman-compose clusterctl
 ]
