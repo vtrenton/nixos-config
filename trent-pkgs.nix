@@ -10,8 +10,8 @@ with pkgs; [
   nix-init nixfmt nvd
 
   # Devel
-  gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc nodejs bun dino
-  yarn python3 ruby android-tools mitscheme chez ghc glow
+  gh glab gcc gdb gnumake go golint errcheck yamllint cargo rustc nodejs bun yarn
+  python3 ruby android-tools mitscheme chez ghc glow
 
   # hacking/forensics
   metasploit nmap tcpdump wireshark exiftool ffuf ghidra sonic-visualiser binwalk

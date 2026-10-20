@@ -73,7 +73,12 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config = { 
+      allowUnfree = true;
+      problems.handlers.fabric.broken = "warn";
+    };
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.trent = {
@@ -182,7 +187,19 @@
       git-lfs
     ];
   };
-  
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      rpi-imager = prev.rpi-imager.overrideAttrs (old: {
+        postPatch = (old.postPatch or "") + ''
+          substituteInPlace $(find . -name platformquirks_linux.cpp) \
+            --replace-fail 'return ::geteuid() == 0;' 'return true;'
+        '';
+      });
+    })
+  ];
+
+
   # override values in broken packages
   #nixpkgs.overlays = [
   #  (final: prev: {
@@ -270,12 +287,29 @@
     };
 
     # Nonroot - flipper and Panda wireless monitor mode
-    udev.extraRules = ''
-      SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE="0777", GROUP="dialout", TAG+="uaccess" 
-      SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838", MODE="0666", GROUP="adm", SYMLINK+="rtl_sdr"
-      ACTION=="add|move", SUBSYSTEM=="net", ENV{DEVTYPE}=="wlan", ATTRS{idVendor}=="148f", ATTRS{idProduct}=="5572", TAG+="systemd", ENV{SYSTEMD_WANTS}="wifi-monitor@%E{INTERFACE}.service"
-      ACTION=="remove", SUBSYSTEM=="net", KERNEL=="mon-*", RUN+="${pkgs.iproute2}/bin/ip link delete %k"
-    '';
+    udev = {
+      # Custom udev files
+      packages = [
+        (pkgs.writeTextFile {
+          name = "rpi-imager-udev-rules";
+          destination = "/lib/udev/rules.d/70-rpi-imager.rules";
+          text = ''
+            # USB mass storage (sticks, USB SD card readers): whole disk + partitions
+            SUBSYSTEM=="block", ENV{ID_BUS}=="usb", ENV{DEVTYPE}=="disk|partition", TAG+="uaccess"
+
+            # Built-in SD/MMC slots
+            SUBSYSTEM=="block", KERNEL=="mmcblk[0-9]*", ENV{DEVTYPE}=="disk|partition", TAG+="uaccess"
+          '';
+        })
+      ];
+      # 99 rules
+      extraRules = ''
+        SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE="0777", GROUP="dialout", TAG+="uaccess" 
+        SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838", MODE="0666", GROUP="adm", SYMLINK+="rtl_sdr"
+        ACTION=="add|move", SUBSYSTEM=="net", ENV{DEVTYPE}=="wlan", ATTRS{idVendor}=="148f", ATTRS{idProduct}=="5572", TAG+="systemd", ENV{SYSTEMD_WANTS}="wifi-monitor@%E{INTERFACE}.service"
+        ACTION=="remove", SUBSYSTEM=="net", KERNEL=="mon-*", RUN+="${pkgs.iproute2}/bin/ip link delete %k"
+      '';
+    };
 
     # Enable CUPS to print documents.
     #printing.enable = true;
