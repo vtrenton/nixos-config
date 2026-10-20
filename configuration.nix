@@ -286,7 +286,6 @@
       enableGeoIP = false;
     };
 
-    # Nonroot - flipper and Panda wireless monitor mode
     udev = {
       # Custom udev files
       packages = [
