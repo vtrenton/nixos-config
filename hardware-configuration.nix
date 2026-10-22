@@ -7,7 +7,11 @@
 
   # System76
   hardware = {
-    system76.enableAll = true;
+    system76 = {
+      kernel-modules.enable = false;   # out-of-tree modules: not needed on coreboot Lemur Pro
+      firmware-daemon.enable = true;   # firmware updates via system76-firmware
+      power-daemon.enable = true;      # system76-power profiles / charge thresholds
+    };
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     rtl-sdr = {
       enable = true;

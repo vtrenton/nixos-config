@@ -76,7 +76,6 @@
   nixpkgs = {
     config = { 
       allowUnfree = true;
-      problems.handlers.fabric.broken = "warn";
     };
   };
 

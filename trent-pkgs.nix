@@ -38,7 +38,9 @@ with pkgs; [
   obsidian
 
   # media
-  gimp feh mpv vlc obs-studio ardour calibre gxplugins-lv2 guitarix ani-cli
+  gimp feh mpv vlc obs-studio ardour
+  #calibre
+  gxplugins-lv2 guitarix ani-cli
   cliamp ffmpeg asciinema asciinema-agg
 
   # Browser
@@ -53,6 +55,6 @@ with pkgs; [
   # containers/DevOps
   kubectl kubernetes kubernetes-helm minikube krew kubebuilder cri-tools opentofu
   pulumi pulumi-esc pulumiPackages.pulumi-go pulumiPackages.pulumi-nodejs awscli2 
-  azure-cli google-cloud-sdk google-cloud-sdk-gce k0sctl dive kind ansible packer
+  google-cloud-sdk google-cloud-sdk-gce k0sctl dive kind ansible packer
   podman-compose clusterctl
 ]
