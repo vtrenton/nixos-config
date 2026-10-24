@@ -72,11 +72,21 @@
   # Experimental
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Allow unfree packages
-  nixpkgs = {
+  nixpkgs = {  
     config = { 
+      # Allow unfree packages
       allowUnfree = true;
     };
+    overlays = [
+      (final: prev: {
+        rpi-imager = prev.rpi-imager.overrideAttrs (old: {
+          postPatch = (old.postPatch or "") + ''
+            substituteInPlace $(find . -name platformquirks_linux.cpp) \
+              --replace-fail 'return ::geteuid() == 0;' 'return true;'
+          '';
+        });
+      })
+    ];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -187,34 +197,6 @@
     ];
   };
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      rpi-imager = prev.rpi-imager.overrideAttrs (old: {
-        postPatch = (old.postPatch or "") + ''
-          substituteInPlace $(find . -name platformquirks_linux.cpp) \
-            --replace-fail 'return ::geteuid() == 0;' 'return true;'
-        '';
-      });
-    })
-  ];
-
-
-  # override values in broken packages
-  #nixpkgs.overlays = [
-  #  (final: prev: {
-  #    # Override the arg that bolt-launcher uses internally
-  #    bolt-launcher = prev.bolt-launcher.override {
-  #      fetchFromGitHub = args:
-  #        if ((args.owner or "") == "AdamCake"
-  #         && (args.repo  or "") == "bolt"
-  #         && (args.tag   or "") == "0.19.0")  # match your snippet
-  #        then prev.fetchFromGitHub (args // {
-  #          hash = "sha256-0ROwETpIa0j7gRhvLMFI9Sz2HEsAuUkQGg0jZef6o/g=";
-  #        })
-  #        else prev.fetchFromGitHub args;
-  #    };
-  #  })
-  #];
 
   security = {
     # Privesc tooling
