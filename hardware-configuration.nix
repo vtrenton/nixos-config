@@ -29,7 +29,6 @@
     };
 
     initrd = {
-      systemd.enable = true;
       availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "usbhid" "sd_mod" "sdhci_pci" ];
       kernelModules = [ "dm-snapshot" ];
       luks.devices."luks-59f57ff3-ece0-40ef-b2b8-b1821af6f8f5".device = "/dev/disk/by-uuid/59f57ff3-ece0-40ef-b2b8-b1821af6f8f5";

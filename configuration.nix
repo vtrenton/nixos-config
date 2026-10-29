@@ -77,6 +77,7 @@
       # Allow unfree packages
       allowUnfree = true;
     };
+    # Disables the rpi-imager "root checker" so I can run the program rootless (<3 udev)
     overlays = [
       (final: prev: {
         rpi-imager = prev.rpi-imager.overrideAttrs (old: {
