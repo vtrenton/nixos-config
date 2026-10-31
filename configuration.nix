@@ -56,6 +56,8 @@
     packages = with pkgs; [
       gh
       jq
+      go
+      cargo
       yq-go
       tmux
       bat
@@ -85,7 +87,7 @@
       minicom
       kicad
       #sdrpp
-      gqrx
+      #gqrx
       hwinfo
       fastfetch
       python3
@@ -101,6 +103,7 @@
       wine
       wine64
       wine-wayland
+      teleport
     ];
   };
 
@@ -110,11 +113,14 @@
     vim
     htop
     tor
+    file
+    binutils
     coreutils
     pciutils
     usbutils
     amdgpu_top
     clinfo
+    gptfdisk
     whois
     dig
     wget
@@ -123,7 +129,6 @@
     pinentry-tty
     git
     killall
-    teleport
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
