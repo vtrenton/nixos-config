@@ -73,7 +73,8 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   nixpkgs = {  
-    config = { 
+   hostPlatform = lib.mkDefault "x86_64-linux";
+   config = { 
       # Allow unfree packages
       allowUnfree = true;
     };
@@ -87,9 +88,28 @@
           '';
         });
       })
+      # Broken package overrides
+      (final: prev: {
+        brave = (import (fetchTarball {
+          url = "https://github.com/NixOS/nixpkgs/archive/1d060086d60cb76a40cf37109f979d88a5bd6396.tar.gz";
+          sha256 = "0br4sv8vf37pbasihv20kq62cmpxl925x4q40i5nghfvmg07a2ld";
+        }) {
+          system = prev.stdenv.hostPlatform.system;
+          config = config.nixpkgs.config;
+        }).brave;
+      })
+      (final: prev: {
+        teleport_18 = prev.teleport_18.override {
+          buildGoModule = prev.buildGo126Module;
+        };
+      })
+      (final: prev: {
+        mitmproxy = prev.mitmproxy.overridePythonAttrs (old: {
+          disabledTests = (old.disabledTests or [ ]) ++ [ "test_emudhra" ];
+        });
+      })
     ];
   };
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.trent = {
     isNormalUser = true;
@@ -173,6 +193,7 @@
       lsof
       whois
       patchelf
+      gptfdisk
       e2fsprogs
       exfat
       netcat-openbsd
@@ -230,6 +251,11 @@
   
   # Service configuration
   services = {
+
+    # firmware updates
+    fwupd = {
+      enable = true;
+    };
 
     # Disable GNOME ssh agent
     gnome = { 
@@ -289,6 +315,15 @@
         SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838", MODE="0666", GROUP="adm", SYMLINK+="rtl_sdr"
         ACTION=="add|move", SUBSYSTEM=="net", ENV{DEVTYPE}=="wlan", ATTRS{idVendor}=="148f", ATTRS{idProduct}=="5572", TAG+="systemd", ENV{SYSTEMD_WANTS}="wifi-monitor@%E{INTERFACE}.service"
         ACTION=="remove", SUBSYSTEM=="net", KERNEL=="mon-*", RUN+="${pkgs.iproute2}/bin/ip link delete %k"
+        # Docked: s2idle so the dock stays powered and can wake the laptop
+        ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="291a", ATTR{idProduct}=="8392", RUN+="${pkgs.bash}/bin/sh -c 'echo s2idle > /sys/power/mem_sleep'"
+
+        # Undocked: back to deep for battery
+        ACTION=="remove", SUBSYSTEM=="usb", ENV{PRODUCT}=="291a/8392/*", RUN+="${pkgs.bash}/bin/sh -c 'echo deep > /sys/power/mem_sleep'"
+
+        # Allow wake through USB hubs and from USB keyboards
+        ACTION=="add", SUBSYSTEM=="usb", DRIVER=="usb", ATTR{bDeviceClass}=="09", TEST=="power/wakeup", ATTR{power/wakeup}="enabled"
+        ACTION=="add", SUBSYSTEM=="usb", ATTR{bInterfaceClass}=="03", ATTR{bInterfaceProtocol}=="01", RUN+="${pkgs.bash}/bin/sh -c 'echo enabled > /sys$env{DEVPATH}/../power/wakeup'"
       '';
     };
 

@@ -2,8 +2,8 @@
 with pkgs; [
   # System
   tree bat ghostty ripgrep openssl xxd hexedit unzip p7zip jq yq-go expect ipcalc 
-  virt-manager pass fzf system76-keyboard-configurator rpi-imager ncdu below inxi 
-  btop usbtop transmission_4-gtk speedtest-cli tigervnc screen wine wine64
+  virt-manager pass fzf system76-keyboard-configurator ncdu inxi rpi-imager #below
+  btop usbtop transmission_4-gtk speedtest-cli tigervnc screen wine wine64   
   wine-wayland
   
   # NixOS
@@ -18,18 +18,15 @@ with pkgs; [
   thc-hydra foremost mitmproxy
 
   # Net/Proxy
-  openvpn openconnect networkmanager-openconnect strongswan wireguard-tools tor
+  openvpn strongswan wireguard-tools tor openconnect networkmanager-openconnect
   proxychains-ng tailscale teleport
 
   # wireless 
-  rtl-sdr #sdrpp 
+  rtl-sdr sdrpp 
 
   # AI 
-  ollama codex claude-code grok-cli opencode opencode-desktop
-
-  # blockchain
-  foundry
-
+  ollama claude-code grok-cli opencode opencode-desktop #codex
+  
   # games/fun
   clolcat cowsay fortune shellcheck checkbashisms qFlipper yt-dlp bolt-launcher
   fastfetch
@@ -38,9 +35,7 @@ with pkgs; [
   obsidian
 
   # media
-  gimp feh mpv vlc obs-studio ardour
-  #calibre
-  gxplugins-lv2 guitarix ani-cli
+  gimp feh mpv vlc obs-studio ardour calibre gxplugins-lv2 guitarix ani-cli
   cliamp ffmpeg asciinema asciinema-agg
 
   # Browser

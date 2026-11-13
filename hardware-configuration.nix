@@ -45,15 +45,12 @@
       ];
     };
     
-    # SHORT TERM HACK - need to lock on 6.12.44 - .45 is broken!
-    #kernelPackages = (import (builtins.fetchTarball "https://codeload.github.com/NixOS/nixpkgs/tar.gz/d0fc30899600b9b3466ddb260fd83deb486c32f1") { system = pkgs.stdenv.system; }).linuxPackages_6_12;
     kernelModules = [ "kvm-intel" ];
     blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
     extraModulePackages = [ ];
 
     # Enable "Silent boot"
     consoleLogLevel = 3;
-    initrd.verbose = false;
     kernelParams = [
       "quiet"
       "splash"
@@ -79,6 +76,4 @@
     };
 
   swapDevices = [ ];
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
