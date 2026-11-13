@@ -89,25 +89,15 @@
         });
       })
       # Broken package overrides
-      (final: prev: {
-        brave = (import (fetchTarball {
-          url = "https://github.com/NixOS/nixpkgs/archive/1d060086d60cb76a40cf37109f979d88a5bd6396.tar.gz";
-          sha256 = "0br4sv8vf37pbasihv20kq62cmpxl925x4q40i5nghfvmg07a2ld";
-        }) {
-          system = prev.stdenv.hostPlatform.system;
-          config = config.nixpkgs.config;
-        }).brave;
-      })
-      (final: prev: {
-        teleport_18 = prev.teleport_18.override {
-          buildGoModule = prev.buildGo126Module;
-        };
-      })
-      (final: prev: {
-        mitmproxy = prev.mitmproxy.overridePythonAttrs (old: {
-          disabledTests = (old.disabledTests or [ ]) ++ [ "test_emudhra" ];
-        });
-      })
+      #(final: prev: {
+      #  brave = (import (fetchTarball {
+      #    url = "https://github.com/NixOS/nixpkgs/archive/1d060086d60cb76a40cf37109f979d88a5bd6396.tar.gz";
+      #    sha256 = "0br4sv8vf37pbasihv20kq62cmpxl925x4q40i5nghfvmg07a2ld";
+      #  }) {
+      #    system = prev.stdenv.hostPlatform.system;
+      #    config = config.nixpkgs.config;
+      #  }).brave;
+      #})
     ];
   };
   # Define a user account. Don't forget to set a password with ‘passwd’.
